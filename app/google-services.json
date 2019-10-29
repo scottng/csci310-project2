@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "484890614564",
+    "firebase_url": "https://usclassifieds-1ac3c.firebaseio.com",
+    "project_id": "usclassifieds-1ac3c",
+    "storage_bucket": "usclassifieds-1ac3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484890614564:android:231c4e64facace641131b1",
+        "android_client_info": {
+          "package_name": "csci310.ng.scott.usclassifieds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484890614564-3uuiugca3h0s2c1j01fbs5da909oiv06.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "csci310.ng.scott.usclassifieds",
+            "certificate_hash": "d48560653fc761db99c09b86b6794b433436658d"
+          }
+        },
+        {
+          "client_id": "484890614564-8prldavkl7gbv7eqdp8b0d21t41js9u0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-aPZBW43hNGkrGhwEuBEInof0atJeh8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484890614564-8prldavkl7gbv7eqdp8b0d21t41js9u0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

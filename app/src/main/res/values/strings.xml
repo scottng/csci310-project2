@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">USClassifieds</string>
+
+    <string name="landing_text_welcome">See what USC students are selling right now.</string>
+    <string name="landing_button_create_account">Create account</string>
+    <string name="landing_text_login">Already have an account?</string>
+    <string name="landing_button_login">Log in</string>
+</resources>
