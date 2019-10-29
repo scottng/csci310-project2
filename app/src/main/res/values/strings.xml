@@ -5,4 +5,7 @@
     <string name="landing_button_create_account">Create account</string>
     <string name="landing_text_login">Already have an account?</string>
     <string name="landing_button_login">Log in</string>
+
+    <string name="login_text_hint_email">Username</string>
+    <string name="login_text_hint_password">Password</string>
 </resources>

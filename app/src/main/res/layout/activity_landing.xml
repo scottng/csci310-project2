@@ -53,7 +53,7 @@
     <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button_login"
+        android:id="@+id/button_directto_login"
         android:text="@string/landing_button_login"
         app:layout_constraintStart_toEndOf="@id/text_login"
         app:layout_constraintBaseline_toBaselineOf="@id/text_login"
