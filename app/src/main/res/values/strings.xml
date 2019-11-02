@@ -2,10 +2,19 @@
     <string name="app_name">USClassifieds</string>
 
     <string name="landing_text_welcome">See what USC students are selling right now.</string>
-    <string name="landing_button_create_account">Create account</string>
+    <string name="landing_button_create_account">Create Account</string>
     <string name="landing_text_login">Already have an account?</string>
-    <string name="landing_button_login">Log in</string>
+    <string name="landing_button_login">Log In</string>
 
     <string name="login_text_hint_email">Email</string>
     <string name="login_text_hint_password">Password</string>
+
+    <string name="create_account_text_header">Create Account</string>
+    <string name="create_account_text_hint_full_name">Full Name</string>
+    <string name="create_account_text_hint_email">USC Email</string>
+    <string name="create_account_text_hint_password">Password</string>
+    <string name="create_account_text_hint_confirm_password">Confirm Password</string>
+    <string name="create_account_text_hint_bio">Enter a short description of yourself for other users to see.</string>
+    <string name="create_account_button_register">Register</string>
+
 </resources>

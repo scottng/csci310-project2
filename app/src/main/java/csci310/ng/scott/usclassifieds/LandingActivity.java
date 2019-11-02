@@ -14,8 +14,8 @@ public class LandingActivity extends AppCompatActivity {
     private static final String TAG = "LandingActivity";
 
     // UI Elements
-    Button buttonCreateAccount;
-    Button buttonDirecttoLogin;
+    private Button buttonCreateAccount;
+    private Button buttonDirecttoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,8 @@ public class LandingActivity extends AppCompatActivity {
         buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(), CreateAccountActivity.class);
+                startActivityForResult(i, CreateAccountActivity.REQUEST_CODE);
             }
         });
 
