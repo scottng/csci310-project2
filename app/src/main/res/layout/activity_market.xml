@@ -7,6 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".MarketActivity"
     android:background="@color/colorPrimaryDark">
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_market"
+        android:background="@color/colorPrimary">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/search_market"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
+        >
+
+
+    </GridView>
     
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

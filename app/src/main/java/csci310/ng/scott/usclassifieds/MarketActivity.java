@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 public class MarketActivity extends AppCompatActivity {
 
+    private static final String TAG = "MarketActivity";
+    public static final int REQUEST_CODE = 3;
+
     private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

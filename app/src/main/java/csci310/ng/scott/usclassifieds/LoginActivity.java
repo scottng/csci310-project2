@@ -3,6 +3,7 @@ package csci310.ng.scott.usclassifieds;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,9 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.edit_text_password);
         buttonLogin = findViewById(R.id.button_login);
 
+        // TEST CODE TO DIRECT TO MARKETACTIVITY
+        // UPON CLICK
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MarketActivity.class);
+                startActivityForResult(i, MarketActivity.REQUEST_CODE);
             }
         });
     }
