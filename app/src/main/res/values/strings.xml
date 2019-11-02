@@ -16,5 +16,9 @@
     <string name="create_account_text_hint_confirm_password">Confirm Password</string>
     <string name="create_account_text_hint_bio">Enter a short description of yourself for other users to see.</string>
     <string name="create_account_button_register">Register</string>
+    <string name="title_activity_market">MarketActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
