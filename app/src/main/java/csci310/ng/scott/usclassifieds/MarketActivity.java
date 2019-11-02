@@ -1,11 +1,13 @@
 package csci310.ng.scott.usclassifieds;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ public class MarketActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private GridView gridViewItems;
+    private FloatingActionButton fabAddItem;
 
     private ItemAdapter adapter;
 
@@ -37,7 +41,7 @@ public class MarketActivity extends AppCompatActivity {
                 case R.id.navigation_market:
                     mTextMessage.setText(R.string.title_market);
                     return true;
-                case R.id.navication_notifications:
+                case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
                     return true;
                 case R.id.navigation_profile:
@@ -60,6 +64,16 @@ public class MarketActivity extends AppCompatActivity {
 
         // Link UI elements
         gridViewItems = findViewById(R.id.grid_items);
+        fabAddItem = findViewById(R.id.fab_add_item);
+
+        fabAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), SellActivity.class);
+                startActivityForResult(i, SellActivity.REQUEST_CODE);
+            }
+        });
+
 
 
     }

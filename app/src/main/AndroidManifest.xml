@@ -18,9 +18,8 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".CreateAccountActivity" />
-        <activity
-            android:name=".MarketActivity"
-            android:label="@string/title_activity_market"></activity>
+        <activity android:name=".MarketActivity" />
+        <activity android:name=".SellActivity"></activity>
     </application>
 
 </manifest>

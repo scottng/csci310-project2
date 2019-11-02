@@ -7,7 +7,7 @@
         android:title="@string/title_market" />
 
     <item
-        android:id="@+id/navication_notifications"
+        android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_notifications" />
 
