@@ -10,8 +10,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+>>>>>>> b3139ff291436cc0a8bd3b44f490557aff2b93e6
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,7 +37,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 2;
     public static final int PICK_IMAGE=3;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference databaseReference;
 
     // UI Elements
     private EditText editTextFullName;
@@ -67,5 +84,49 @@ public class CreateAccountActivity extends AppCompatActivity {
             Uri profilePicUri = data.getData();
             imageButtonProfilePicture.setImageURI(profilePicUri);
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
+
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String fullName = editTextFullName.getText().toString();
+                final String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+                String confirmPassword = editTextConfirmPassword.getText().toString();
+                final String textBio = editTextBio.getText().toString();
+
+                // check field is not empty
+                if (TextUtils.isEmpty(fullName)) {
+                    Toast.makeText(CreateAccountActivity.this, "Please Enter Full Name", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+
+                                    User userInfo = new User(fullName, email, textBio);
+
+                                    databaseReference.child(mAuth.getCurrentUser().getUid())
+                                            .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), MarketActivity.class));
+                                        }
+                                    });
+
+                                } else {
+                                    Toast.makeText(CreateAccountActivity.this, "Failed to Register", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+            }
+        });
     }
 }
