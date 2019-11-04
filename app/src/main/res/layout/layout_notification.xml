@@ -29,32 +29,42 @@
                 app:layout_constraintBaseline_toBaselineOf="parent"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/list_notification_message"
-                app:layout_constraintStart_toEndOf="@id/list_notification_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="185dp"
+                android:layout_height="42dp"
                 android:layout_marginLeft="16dp"
                 android:text="Andy has sent you a friend request."
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/list_notification_image"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/list_notification_button_accept"
-                android:text="Accept"
+            android:id="@+id/list_notification_button_accept"
+            android:layout_width="55dp"
+            android:layout_height="37dp"
+            android:layout_marginEnd="80dp"
+            android:background="@null"
+            android:text="Accept"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAction"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.592" />
+
+            <Button
+                android:id="@+id/list_notification_button_decline"
+                android:layout_width="55dp"
+                android:layout_height="37dp"
+                android:layout_marginEnd="16dp"
+                android:background="@null"
+                android:text="Decline"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAction"
-                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-
-
-
+                app:layout_constraintVertical_bias="0.592" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
