@@ -1,7 +1,9 @@
 package csci310.ng.scott.usclassifieds;
 
+import android.net.Uri;
+
 public class User {
-    private String profilePic;
+    private Uri profilePic;
     private String fullName;
     private String email;
     private String phone;
@@ -10,8 +12,8 @@ public class User {
 
     public User() {}
 
-    public User(String fullName, String email, String textBio) {
-        this.profilePic = "";
+    public User(String fullName, String email, String textBio, Uri profilePic) {
+        this.profilePic = profilePic;
         this.fullName = fullName;
         this.email = email;
         this.phone = "";
@@ -19,7 +21,7 @@ public class User {
         this.textBio = textBio;
     }
 
-    public String getProfilePic() {
+    public Uri getProfilePic() {
         return profilePic;
     }
 
@@ -43,7 +45,7 @@ public class User {
         return textBio;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(Uri profilePic) {
         this.profilePic = profilePic;
     }
 

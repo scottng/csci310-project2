@@ -48,6 +48,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText editTextBio;
     private Button buttonRegister;
     private CircleImageView imageButtonProfilePicture;
+    private Uri profilePictureUri=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +75,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture For Your Profile"), PICK_IMAGE);
             }
         });
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //on return from picking an image for profile
-        if (requestCode== PICK_IMAGE  && resultCode == RESULT_OK && data!=null) {
-            Uri profilePicUri = data.getData();
-            imageButtonProfilePicture.setImageURI(profilePicUri);
-        }
+        //set up register button listener
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
@@ -138,7 +131,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    User userInfo = new User(fullName, email, textBio);
+                                    User userInfo = new User(fullName, email, textBio, profilePictureUri);
 
                                     databaseReference.child(mAuth.getCurrentUser().getUid())
                                             .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -158,4 +151,15 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //on return from picking an image for profile
+        if (requestCode== PICK_IMAGE  && resultCode == RESULT_OK && data!=null) {
+            profilePictureUri = data.getData();
+            imageButtonProfilePicture.setImageURI(profilePictureUri);
+        }
+    }
+
 }
