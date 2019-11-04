@@ -26,13 +26,13 @@
         app:layout_constraintTop_toBottomOf="@id/text_notifications_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/navigation"
+        app:layout_constraintBottom_toTopOf="@id/navigationNote"
         tools:listitem="@layout/layout_notification"
         android:layout_marginTop="24dp"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/navigationNote"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"

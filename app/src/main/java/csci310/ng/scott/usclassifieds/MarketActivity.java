@@ -31,6 +31,8 @@ public class MarketActivity extends AppCompatActivity {
     private FloatingActionButton fabAddItem;
 
     private ItemAdapter adapter;
+    private BottomNavigationView navigation;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,8 +65,10 @@ public class MarketActivity extends AppCompatActivity {
 
         // Link bottom navigation
         // mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //set selected item depending on Activity
+        navigation.setSelectedItemId(R.id.navigation_market);
 
         // Link UI elements
         gridViewItems = findViewById(R.id.grid_items);
@@ -108,10 +112,11 @@ public class MarketActivity extends AppCompatActivity {
             return convertView;
         }
 
-//        @Override
-//        public long getItemId(int position) {
-//            return getItem(position).getId();
-//        }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigation.setSelectedItemId(R.id.navigation_market);
+    }
 }
