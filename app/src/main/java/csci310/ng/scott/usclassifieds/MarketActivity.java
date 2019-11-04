@@ -26,7 +26,7 @@ public class MarketActivity extends AppCompatActivity {
     private static final String TAG = "MarketActivity";
     public static final int REQUEST_CODE = 3;
 
-    private TextView mTextMessage;
+    // private TextView mTextMessage;
     private GridView gridViewItems;
     private FloatingActionButton fabAddItem;
 
@@ -39,13 +39,17 @@ public class MarketActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_market:
-                    mTextMessage.setText(R.string.title_market);
+                    // mTextMessage.setText(R.string.title_market);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    // mTextMessage.setText(R.string.title_notifications);
+                    Intent j = new Intent(MarketActivity.this, NotificationsActivity.class);
+                    startActivity(j);
                     return true;
                 case R.id.navigation_profile:
-                    mTextMessage.setText(R.string.title_profile);
+                    // mTextMessage.setText(R.string.title_profile);
+                    Intent k = new Intent(MarketActivity.this, ProfileActivity.class);
+                    startActivity(k);
                     return true;
             }
             return false;
@@ -58,7 +62,7 @@ public class MarketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_market);
 
         // Link bottom navigation
-        mTextMessage = (TextView) findViewById(R.id.message);
+        // mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
