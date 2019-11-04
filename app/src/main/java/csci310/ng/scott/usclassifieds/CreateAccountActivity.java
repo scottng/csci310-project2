@@ -119,7 +119,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
 
                 // check field is not empty
-                if (TextUtils.isEmpty(fullName)) {
+                if (password.length() < 6) {
+                    Toast.makeText(CreateAccountActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // check field is not empty
+                if (TextUtils.isEmpty(confirmPassword)) {
                     Toast.makeText(CreateAccountActivity.this, "Please Re-Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -140,7 +146,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     final User userInfo = new User(fullName, email, textBio);
 
                                     if(profilePictureUri != null) {
-                                        mStorageRef = FirebaseStorage.getInstance().getReference().child("pics");
+                                        mStorageRef = FirebaseStorage.getInstance().getReference().child("profile_pics");
                                         final StorageReference imageFilePath = mStorageRef.child(mAuth.getCurrentUser().getUid());
                                         imageFilePath.putFile(profilePictureUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override

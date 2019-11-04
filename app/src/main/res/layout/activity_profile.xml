@@ -109,6 +109,32 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="24dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_filter"
+        android:text="Filter"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@null"
+        android:textColor="@color/colorWhite"
+        />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/grid_items_in_profile"
+        android:layout_margin="24dp"
+        app:layout_constraintTop_toBottomOf="@id/text_profile_label_items"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/layout_item"
+        android:numColumns="2"
+        >
+
+    </GridView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
