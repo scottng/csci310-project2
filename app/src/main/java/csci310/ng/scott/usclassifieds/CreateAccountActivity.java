@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -91,16 +92,45 @@ public class CreateAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String fullName = editTextFullName.getText().toString();
                 final String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
-                String confirmPassword = editTextConfirmPassword.getText().toString();
+                final String password = editTextPassword.getText().toString();
+                final String confirmPassword = editTextConfirmPassword.getText().toString();
                 final String textBio = editTextBio.getText().toString();
 
                 // check field is not empty
                 if (TextUtils.isEmpty(fullName)) {
                     Toast.makeText(CreateAccountActivity.this, "Please Enter Full Name", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
+                // check field is not empty
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(CreateAccountActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                if (!email.matches(".*@usc\\.edu")) {
+                    Toast.makeText(CreateAccountActivity.this, "Please Enter a USC Email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // check field is not empty
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(CreateAccountActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // check field is not empty
+                if (TextUtils.isEmpty(fullName)) {
+                    Toast.makeText(CreateAccountActivity.this, "Please Re-Enter Password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
+                    Toast.makeText(CreateAccountActivity.this, "Passwords Don't Match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(CreateAccountActivity.this, "Registering...", Toast.LENGTH_SHORT).show();
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
