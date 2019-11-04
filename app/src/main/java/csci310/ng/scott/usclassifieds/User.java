@@ -3,7 +3,7 @@ package csci310.ng.scott.usclassifieds;
 import android.net.Uri;
 
 public class User {
-    private Uri profilePic;
+    private String profilePic;
     private String fullName;
     private String email;
     private String phone;
@@ -12,8 +12,8 @@ public class User {
 
     public User() {}
 
-    public User(String fullName, String email, String textBio, Uri profilePic) {
-        this.profilePic = profilePic;
+    public User(String fullName, String email, String textBio) {
+        this.profilePic = "";
         this.fullName = fullName;
         this.email = email;
         this.phone = "";
@@ -21,7 +21,7 @@ public class User {
         this.textBio = textBio;
     }
 
-    public Uri getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
 
@@ -45,7 +45,7 @@ public class User {
         return textBio;
     }
 
-    public void setProfilePic(Uri profilePic) {
+    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
 

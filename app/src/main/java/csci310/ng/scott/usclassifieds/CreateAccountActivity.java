@@ -23,11 +23,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -39,6 +44,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference;
+    private StorageReference mStorageRef;
 
     // UI Elements
     private EditText editTextFullName;
@@ -131,16 +137,58 @@ public class CreateAccountActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    User userInfo = new User(fullName, email, textBio, profilePictureUri);
+                                    final User userInfo = new User(fullName, email, textBio);
 
-                                    databaseReference.child(mAuth.getCurrentUser().getUid())
-                                            .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), MarketActivity.class));
-                                        }
-                                    });
+                                    if(profilePictureUri != null) {
+                                        mStorageRef = FirebaseStorage.getInstance().getReference().child("pics");
+                                        final StorageReference imageFilePath = mStorageRef.child(mAuth.getCurrentUser().getUid());
+                                        imageFilePath.putFile(profilePictureUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                                                .setDisplayName(fullName)
+                                                                .setPhotoUri(uri)
+                                                                .build();
+
+                                                        mAuth.getCurrentUser().updateProfile(profileUpdate)
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        // successfully added pic and user
+                                                                    }
+                                                                });
+
+                                                        userInfo.setProfilePic(uri.toString());
+
+                                                        userInfo.setUserID(mAuth.getCurrentUser().getUid());
+
+                                                        databaseReference.child(mAuth.getCurrentUser().getUid())
+                                                                .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
+                                                                startActivity(new Intent(getApplicationContext(), MarketActivity.class));
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        userInfo.setUserID(mAuth.getCurrentUser().getUid());
+
+                                        databaseReference.child(mAuth.getCurrentUser().getUid())
+                                                .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(getApplicationContext(), MarketActivity.class));
+                                            }
+                                        });
+                                    }
 
                                 } else {
                                     Toast.makeText(CreateAccountActivity.this, "Failed to Register", Toast.LENGTH_SHORT).show();
