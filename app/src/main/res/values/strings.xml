@@ -32,6 +32,11 @@
     <string name="profile_text_label_email">Email: </string>
     <string name="profile_text_label_phone">Phone: </string>
 
+    <string name="other_profile_text_header">Profile</string>
+    <string name="other_profile_text_bio_sample">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id tortor quam. </string>
+    <string name="other_profile_text_label_email">Email: </string>
+    <string name="other_profile_text_label_phone">Phone: </string>
+
     <string name="title_market">Market</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
