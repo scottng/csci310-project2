@@ -15,17 +15,26 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class SellActivity extends AppCompatActivity {
 
     private static final String TAG = "SellActivity";
     public static final int REQUEST_CODE = 4;
     public static final int PICK_IMAGE = 3;
+
+    // Profile pic URI
+    private Uri itemPicUri;
+    private StorageReference mStorageRef;
 
     Button buttonCancel;
     ImageView imageButtonItemPicture;
@@ -86,21 +95,43 @@ public class SellActivity extends AppCompatActivity {
                 } else if (editTextDescription.getText().toString().trim().length() == 0) {
                     Toast.makeText(getApplicationContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    Item mItem = new Item();
+                    final Item mItem = new Item();
 
-                    mItem.setTitle(editTextTitle.toString());
+                    mItem.setSellerID(mAuth.getCurrentUser().getUid());
+                    mItem.setTitle(editTextTitle.getText().toString());
                     mItem.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
-                    mItem.setDescription(editTextDescription.toString());
+                    mItem.setDescription(editTextDescription.getText().toString());
                     mItem.setSold(false);
 
-                    dbRef.child(mAuth.getCurrentUser().getUid())
-                            .setValue(mItem).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    // ADD PHOTO AND ITEM TO DATABASE
+                    final String currentTime = String.valueOf(System.currentTimeMillis());
+
+                    // Create storage ref name
+                    mStorageRef = FirebaseStorage.getInstance().getReference().child("item_pics");
+                    final StorageReference imageFilePath = mStorageRef.child(mAuth.getCurrentUser().getUid() + "-" + currentTime);
+
+                    imageFilePath.putFile(itemPicUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(SellActivity.this, "Your item has been posted!", Toast.LENGTH_SHORT).show();
-                            finish();
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    mItem.setPhotoURL(uri.toString());
+
+                                    dbRef.child(mAuth.getCurrentUser().getUid() + "-" + currentTime)
+                                            .setValue(mItem).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(SellActivity.this, "Your item has been posted!", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                    });
+                                }
+                            });
                         }
                     });
+
+
                 }
 
             }
@@ -114,8 +145,8 @@ public class SellActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //on return from picking an image for profile
         if (requestCode== PICK_IMAGE  && resultCode == RESULT_OK && data!=null) {
-            Uri profilePicUri = data.getData();
-            imageButtonItemPicture.setImageURI(profilePicUri);
+            itemPicUri = data.getData();
+            imageButtonItemPicture.setImageURI(itemPicUri);
         }
     }
 }
