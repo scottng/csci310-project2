@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,12 +38,14 @@ public class SellActivity extends AppCompatActivity {
     private Uri itemPicUri;
     private StorageReference mStorageRef;
 
+    // UI Elements
     Button buttonCancel;
     ImageView imageButtonItemPicture;
     EditText editTextTitle;
     EditText editTextPrice;
     EditText editTextDescription;
     Button buttonPostItem;
+    RadioGroup radioGroupSellCategory;
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -64,6 +68,7 @@ public class SellActivity extends AppCompatActivity {
         editTextPrice = findViewById(R.id.edit_text_price);
         editTextDescription = findViewById(R.id.edit_text_description);
         buttonPostItem = findViewById(R.id.button_post_item);
+        radioGroupSellCategory = (RadioGroup)findViewById(R.id.radio_group_sell_category);
 
         // Cancel button listener
         buttonCancel.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +98,9 @@ public class SellActivity extends AppCompatActivity {
                 } else if (editTextPrice.getText().toString().trim().length() == 0) {
                     Toast.makeText(getApplicationContext(), "Price cannot be blank", Toast.LENGTH_LONG).show();
                 } else if (editTextDescription.getText().toString().trim().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Description cannot be empty", Toast.LENGTH_LONG).show();
+                } else if (itemPicUri == null) {
+                    Toast.makeText(getApplicationContext(), "Picture cannot be empty", Toast.LENGTH_LONG).show();
                 } else {
                     final Item mItem = new Item();
 
@@ -102,6 +109,10 @@ public class SellActivity extends AppCompatActivity {
                     mItem.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
                     mItem.setDescription(editTextDescription.getText().toString());
                     mItem.setSold(false);
+
+                    int index = radioGroupSellCategory.indexOfChild(findViewById(radioGroupSellCategory.getCheckedRadioButtonId()));
+                    mItem.setCategory(index);
+
 
                     // ADD PHOTO AND ITEM TO DATABASE
                     final String currentTime = String.valueOf(System.currentTimeMillis());
