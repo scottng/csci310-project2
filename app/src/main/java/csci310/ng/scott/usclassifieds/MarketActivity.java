@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,8 +25,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.GridView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,7 @@ public class MarketActivity extends AppCompatActivity {
     private GridView gridViewItems;
     private FloatingActionButton fabAddItem;
     private Button buttonFilter;
+    private SearchView searchMarket;
 
     private ItemAdapter adapter;
     private BottomNavigationView navigation;
@@ -112,6 +114,7 @@ public class MarketActivity extends AppCompatActivity {
         gridViewItems = findViewById(R.id.grid_items);
         fabAddItem = findViewById(R.id.fab_add_item);
         buttonFilter = findViewById(R.id.button_filter);
+        searchMarket = findViewById(R.id.search_market);
 
         // Set FAB listener
         fabAddItem.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +131,19 @@ public class MarketActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent j = new Intent(getApplicationContext(), FilterActivity.class);
                 startActivityForResult(j, FilterActivity.REQUEST_CODE);
+            }
+        });
+
+        searchMarket.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
             }
         });
 
