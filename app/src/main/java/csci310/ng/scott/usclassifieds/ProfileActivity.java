@@ -38,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
     TextView textProfileName;
     TextView textProfileBio;
     TextView textProfileBodyEmail;
-    TextView textProfileBodyPhone;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
     private BottomNavigationView navigation;
 
@@ -55,7 +54,6 @@ public class ProfileActivity extends AppCompatActivity {
         textProfileName = findViewById(R.id.text_profile_name);
         textProfileBio = findViewById(R.id.text_profile_bio);
         textProfileBodyEmail = findViewById(R.id.text_profile_body_email);
-        textProfileBodyPhone = findViewById(R.id.text_profile_body_phone);
         navigation= findViewById(R.id.navigation);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -103,9 +101,6 @@ public class ProfileActivity extends AppCompatActivity {
                     textProfileBio.setText(currUserInfo.getTextBio());
                 }
                 textProfileBodyEmail.setText(currUserInfo.getEmail());
-                if (!currUserInfo.getPhone().equals("")) {
-                    textProfileBodyPhone.setText(currUserInfo.getPhone());
-                }
                 if (!currUserInfo.getProfilePic().equals("")) {
                     Glide.with(getApplicationContext())
                             .load(currUserInfo.getProfilePic()).into(imageProfilePicture);
