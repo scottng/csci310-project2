@@ -59,6 +59,13 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/radioTransportation"
+            android:text="Transportation"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/radioMiscellaneous"
             android:text="Miscellaneous"
             />
@@ -105,6 +112,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radio_group_sort"
         android:layout_margin="24dp"
+        android:background="@color/colorAction"
+        android:textColor="@color/colorWhite"
         />
 
 
