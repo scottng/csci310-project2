@@ -78,16 +78,7 @@
         android:textStyle="bold"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_label_phone"
-        android:text="@string/other_profile_text_label_phone"
-        app:layout_constraintTop_toBottomOf="@id/text_other_profile_label_email"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"/>
+
 
     <TextView
         android:layout_width="0dp"
@@ -100,17 +91,17 @@
         app:layout_constraintStart_toEndOf="@id/text_other_profile_label_email"
         android:textColor="@color/colorWhite"/>
 
-    <TextView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_body_phone"
-        android:text="Placeholder text"
-        android:layout_margin="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@id/text_other_profile_label_phone"
-        app:layout_constraintStart_toEndOf="@id/text_other_profile_label_phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        />
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
 
     <Button
         android:layout_width="0dp"
@@ -120,7 +111,7 @@
         style="@style/LongButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_other_profile_body_phone"
+        app:layout_constraintTop_toBottomOf="@id/text_other_profile_body_email"
         android:layout_margin="24dp"/>
 
 
