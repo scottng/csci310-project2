@@ -84,5 +84,17 @@
         app:layout_constraintTop_toBottomOf="@id/view_profile_picture"
         />
 
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_mark_sold"
+        style="@style/LongButton"
+        android:text="Mark as sold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_profile_name"
+        android:layout_margin="24dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
