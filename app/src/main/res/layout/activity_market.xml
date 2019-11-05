@@ -9,9 +9,11 @@
     android:background="@color/colorPrimaryDark">
 
     <androidx.appcompat.widget.SearchView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_filter"
         android:id="@+id/search_market"
         android:background="@color/colorPrimary">
 
