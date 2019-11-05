@@ -103,6 +103,40 @@
 
     </RadioGroup>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_filer_header_search"
+        android:text="Search by"
+        style="@style/Heading1"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_sort"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="24dp"
+        />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radio_group_search"
+        app:layout_constraintStart_toStartOf="@id/text_filer_header_search"
+        app:layout_constraintTop_toBottomOf="@id/text_filer_header_search">
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_item"
+            android:checked="true"
+            android:text="Items"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_user"
+            android:text="User"/>
+
+    </RadioGroup>
+
     <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -110,11 +144,17 @@
         android:text="Apply filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group_sort"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_search"
         android:layout_margin="24dp"
         android:background="@color/colorAction"
         android:textColor="@color/colorWhite"
+
         />
+
+
+
+
+
 
 
 

@@ -18,6 +18,7 @@ public class FilterActivity extends AppCompatActivity {
     Button buttonFilterCancel;
     RadioGroup radioGroupFilterCategory;
     RadioGroup radioGroupSort;
+    RadioGroup radioGroupSearch;
     Button buttonFilterApply;
 
     @Override
@@ -29,6 +30,7 @@ public class FilterActivity extends AppCompatActivity {
         buttonFilterCancel = findViewById(R.id.button_filter_cancel);
         radioGroupFilterCategory = findViewById(R.id.radio_group_filter_category);
         radioGroupSort = findViewById(R.id.radio_group_sort);
+        radioGroupSearch = findViewById(R.id.radio_group_search);
         buttonFilterApply = findViewById(R.id.button_filter_apply);
 
         // Cancel button should finish activity
