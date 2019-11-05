@@ -36,9 +36,8 @@
                 android:layout_marginLeft="16dp"
                 android:text="Tommy Trojan"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/user_img
-"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/user_img"
+            />
 
 
 
