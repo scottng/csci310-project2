@@ -109,12 +109,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Glide.with(getApplicationContext())
                             .load(currUserInfo[0].getProfilePic()).into(imageProfilePicture);
                 }
-
-                for(DataSnapshot dss : dataSnapshot.child("Item").getChildren()) {
-
-                    Item myItem = dss.getValue(Item.class);
-                    Log.d("Found Item", "Item " + myItem.getItemID());
-                }
             }
 
             @Override

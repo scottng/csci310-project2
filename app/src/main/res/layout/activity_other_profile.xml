@@ -106,7 +106,7 @@
     <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button_register"
+        android:id="@+id/other_search_user"
         android:text="Search Items Sold By User"
         style="@style/LongButton"
         app:layout_constraintStart_toStartOf="parent"
