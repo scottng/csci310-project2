@@ -39,8 +39,8 @@ public class MarketActivity extends AppCompatActivity {
 
     private static final String TAG = "MarketActivity";
     public static final int REQUEST_CODE = 3;
-    private int categoryIndex = -1;
-    private int sortIndex = -1;
+    private int categoryIndex = 5;
+    private int sortIndex = 0;
 
     // Firebase stuff
     private FirebaseAuth firebaseAuth;
@@ -148,12 +148,13 @@ public class MarketActivity extends AppCompatActivity {
         searchMarket.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.d(TAG, "Querying " + query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                Log.d(TAG, "New Query " + newText);
                 return false;
             }
         });
