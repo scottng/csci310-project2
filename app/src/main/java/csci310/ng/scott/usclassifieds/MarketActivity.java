@@ -65,6 +65,7 @@ public class MarketActivity extends AppCompatActivity {
     private GridView gridViewItems;
     private FloatingActionButton fabAddItem;
     private Button buttonFilter;
+    private Button buttonMap;
     private SearchView searchMarket;
 
     private ItemAdapter adapter;
@@ -114,6 +115,7 @@ public class MarketActivity extends AppCompatActivity {
         gridViewItems = findViewById(R.id.grid_items);
         fabAddItem = findViewById(R.id.fab_add_item);
         buttonFilter = findViewById(R.id.button_filter);
+        buttonMap = findViewById(R.id.button_map);
         searchMarket = findViewById(R.id.search_market);
 
         // Set FAB listener
@@ -122,6 +124,15 @@ public class MarketActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), SellActivity.class);
                 startActivityForResult(i, SellActivity.REQUEST_CODE);
+            }
+        });
+
+        // Set map button listener
+        buttonMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent k = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivityForResult(k, MapsActivity.REQUEST_CODE);
             }
         });
 

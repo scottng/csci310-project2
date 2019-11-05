@@ -45,6 +45,7 @@ public class MapsActivity extends FragmentActivity
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
+    public static final int REQUEST_CODE = 1234;
 
 //    // The entry points to the Places API.
 //    private GeoDataClient mGeoDataClient;
