@@ -45,6 +45,14 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = getIntent();
 
+                int categoryIndex = radioGroupFilterCategory.indexOfChild(findViewById(radioGroupFilterCategory.getCheckedRadioButtonId()));
+                i.putExtra("categoryIndex", categoryIndex);
+
+                int sortIndex = radioGroupSort.indexOfChild(findViewById(radioGroupSort.getCheckedRadioButtonId()));
+                i.putExtra("sortIndex", sortIndex);
+
+                setResult(RESULT_OK, i);
+
                 finish();
             }
         });
