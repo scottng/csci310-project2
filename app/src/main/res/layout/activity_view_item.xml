@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewItemActivity"
+    style="@style/AppTheme"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageView
+        android:id="@+id/view_item_img"
+        android:layout_width="401dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/bike"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:textSize="35sp"
+        android:id="@+id/view_item_name"
+        style="@style/Heading1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_marginStart="84dp"
+        android:text="Fixie Bike"
+        android:textAppearance="?android:attr/textAppearance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_item_img" />
+
+    <TextView
+        android:textSize="25sp"
+        android:textColor="@color/colorAction"
+        android:id="@+id/view_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/list_item_name"
+        android:text="$20.34"
+        android:textAppearance="?android:attr/textAppearance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_item_name"
+        />
+    <TextView
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:id="@+id/view_item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:padding="16dp"
+        android:layout_below="@+id/list_item_name"
+        android:text="This is a 2017 beach bike bought from Sole bycicles"
+        android:textAppearance="?android:attr/textAppearance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_item_price"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/view_profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_item_description"
+        android:layout_margin="24dp"
+        android:src="@drawable/bike"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_profile_name"
+        android:text="Diane Nguyen"
+        style="@style/Heading1"
+        android:layout_margin="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_profile_picture"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
