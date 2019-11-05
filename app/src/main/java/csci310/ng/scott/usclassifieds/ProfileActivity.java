@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
 
     // UI Elements
+    private Button searchUser;
     CircleImageView imageProfilePicture;
     TextView textProfileName;
     TextView textProfileBio;
@@ -53,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         imageProfilePicture = findViewById(R.id.image_profile_picture);
         textProfileName = findViewById(R.id.text_profile_name);
         textProfileBio = findViewById(R.id.text_profile_bio);
+        searchUser = findViewById(R.id.search_user);
         textProfileBodyEmail = findViewById(R.id.text_profile_body_email);
         navigation= findViewById(R.id.navigation);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,22 +91,22 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         };
-
+        final User[] currUserInfo = new User[1];
         final FirebaseUser currUser = firebaseAuth.getCurrentUser();
         DatabaseReference rootRef = firebaseDatabase.getReference();
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User currUserInfo = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
+                currUserInfo[0] = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
 
-                textProfileName.setText(currUserInfo.getFullName());
-                if (!currUserInfo.getTextBio().equals("")) {
-                    textProfileBio.setText(currUserInfo.getTextBio());
+                textProfileName.setText(currUserInfo[0].getFullName());
+                if (!currUserInfo[0].getTextBio().equals("")) {
+                    textProfileBio.setText(currUserInfo[0].getTextBio());
                 }
-                textProfileBodyEmail.setText(currUserInfo.getEmail());
-                if (!currUserInfo.getProfilePic().equals("")) {
+                textProfileBodyEmail.setText(currUserInfo[0].getEmail());
+                if (!currUserInfo[0].getProfilePic().equals("")) {
                     Glide.with(getApplicationContext())
-                            .load(currUserInfo.getProfilePic()).into(imageProfilePicture);
+                            .load(currUserInfo[0].getProfilePic()).into(imageProfilePicture);
                 }
 
                 for(DataSnapshot dss : dataSnapshot.child("Item").getChildren()) {
@@ -116,6 +119,15 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        searchUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MarketActivity.class);
+                intent.putExtra("User", currUserInfo[0]);
+                startActivity(intent);
             }
         });
 
