@@ -9,12 +9,13 @@ public class Item {
     private Boolean sold;
     private String photoURL;
     private Integer category;
+    private String address;
 
     public Item() {
 
     }
 
-    public Item(String itemID, String sellerID, String title, String description, double price, Boolean sold, String photoURL, Integer category) {
+    public Item(String itemID, String sellerID, String title, String description, double price, Boolean sold, String photoURL, Integer category, String addy) {
         this.itemID = itemID;
         this.sellerID = sellerID;
         this.title = title;
@@ -23,6 +24,7 @@ public class Item {
         this.sold = sold;
         this.photoURL = photoURL;
         this.category = category;
+        this.address = addy;
     }
 
     public String getItemID() {
@@ -88,4 +90,6 @@ public class Item {
     public void setCategory(Integer category) {
         this.category = category;
     }
+
+    public String getAddress(){return address;}
 }

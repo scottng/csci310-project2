@@ -2,6 +2,8 @@ package csci310.ng.scott.usclassifieds;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +36,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 
 /**
@@ -109,7 +115,40 @@ public class MapsActivity extends FragmentActivity
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+
+
+        // get items from Market Activity
+        Vector<Item> items = new Vector<Item>();
+
+        // add markers for each item
+        for (Item item : items){
+            LatLng loc = getLatLng(item.getAddress());
+            map.addMarker(new MarkerOptions().position(loc).title(item.getTitle()));
+        }
+
     }
+
+    public LatLng getLatLng(String addy){
+        // change string address to lat long
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        LatLng loc = null;
+
+        try{
+            address = coder.getFromLocationName(addy, 5);
+            if (address == null){
+                return new LatLng(34.0522, 118.2437);
+            }
+            Address location = address.get(0);
+            loc = new LatLng(location.getLatitude(), location.getLongitude());
+            return loc;
+
+        } catch (IOException e){
+            return new LatLng(34.0522, 118.2437);
+        }
+
+    }
+
 
     /**
      * Gets the current location of the device, and positions the map's camera.
