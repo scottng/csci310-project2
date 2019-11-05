@@ -70,6 +70,15 @@
             android:text="Miscellaneous"
             />
 
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioAll"
+            android:text="All"
+            android:checked="true"
+            />
+
+
     </RadioGroup>
 
     <TextView
@@ -99,7 +108,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radioPrice"
-            android:text="Price" />
+            android:text="Price"
+            android:checked="true"/>
 
     </RadioGroup>
 
