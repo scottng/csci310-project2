@@ -17,7 +17,15 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="24dp"
         />
-
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_register"
+        android:text="Edit"
+        style="@style/LongButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="24dp"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="160dp"
         android:layout_height="160dp"
