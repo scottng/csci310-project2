@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
+        Log.d(TAG, "about to build map");
         // Build the map.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -119,17 +119,20 @@ public class MapsActivity extends FragmentActivity
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
+        Log.d(TAG, "about get get intent info");
 
         // get items from Market Activity
         Intent intent = getIntent();
         ArrayList<Item> items = intent.getParcelableExtra("items");
 
         // add markers for each item
-        for (Item item : items){
-            LatLng loc = new LatLng(item.getLat(), item.getLng());
-            map.addMarker(new MarkerOptions().position(loc).title(item.getTitle()));
+        if (items != null){
+            for (Item item : items){
+                LatLng loc = new LatLng(item.getLat(), item.getLng());
+                mMap.addMarker(new MarkerOptions().position(loc).title(item.getTitle()));
+                Log.d(TAG, "adding a marker");
+            }
         }
-
     }
 
 
