@@ -82,6 +82,8 @@ public class MarketActivity extends AppCompatActivity {
     ListView list;
     ItemListAdapter itemAdapter;
 
+    UserListAdapter userAdapter;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -236,6 +238,16 @@ public class MarketActivity extends AppCompatActivity {
             for (User user : userList) {
                 Log.d(TAG, "Filtered User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
             }
+            userAdapter = new UserListAdapter(getApplicationContext(), R.layout.layout_user, userList);
+            list.setAdapter(userAdapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(MarketActivity.this, OtherProfileActivity.class);
+                    intent.putExtra("User", userList.get(i));
+                    startActivity(intent);
+                }
+            });
         }
 
     }
@@ -268,7 +280,25 @@ public class MarketActivity extends AppCompatActivity {
         }
 
     }
-    
+    // Adapter for items
+    private class UserAdapter extends ArrayAdapter<User> {
+        private List<User> users;
+        public UserAdapter(Context context, int resource, List<User> objects){
+            super(context, resource, objects);
+            this.users = objects;
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if(convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.layout_user, null);
+            }
+            User curr = users.get(position);
+            TextView textFullName = convertView.findViewById(R.id.user_full_name);
+            textFullName.setText(curr.getFullName());
+            return convertView;
+        }
+
+    }
 
     // Not sure what this does
     @Override
@@ -288,9 +318,6 @@ public class MarketActivity extends AppCompatActivity {
         super.onStop();
         if(authStateListener != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
-        }
-        if (dbListener != null) {
-            firebaseDatabase.getReference().removeEventListener(dbListener);
         }
     }
 

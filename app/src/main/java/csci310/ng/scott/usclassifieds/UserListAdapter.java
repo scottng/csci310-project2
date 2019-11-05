@@ -1,6 +1,7 @@
 package csci310.ng.scott.usclassifieds;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,9 @@ public class UserListAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = LayoutInflater.from(mcontext);
         convertView = inflater.inflate(mresource, parent, false);
         TextView nameView = (TextView) convertView.findViewById(R.id.user_full_name);
-        Glide.with(mcontext).load(img).into((ImageView) convertView.findViewById(R.id.image_item));
+        if(!TextUtils.isEmpty(img)) {
+            Glide.with(mcontext).load(img).into((ImageView) convertView.findViewById(R.id.user_img));
+        }
         nameView.setText(fullName);
         return convertView;
     }
