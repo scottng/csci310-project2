@@ -52,8 +52,10 @@ public class FilterActivity extends AppCompatActivity {
 
                 int sortIndex = radioGroupSort.indexOfChild(findViewById(radioGroupSort.getCheckedRadioButtonId()));
                 i.putExtra("sortIndex", sortIndex);
-                int searchIndex = radioGroupSearch.indexOfChild(findViewById(radioGroupSearch.getCheckedRadioButtonId()));
-                i.putExtra("searchIndex", searchIndex);
+
+                int groupIndex = radioGroupSearch.indexOfChild(findViewById(radioGroupSearch.getCheckedRadioButtonId()));
+                i.putExtra("groupIndex", groupIndex);
+
                 setResult(RESULT_OK, i);
 
                 finish();

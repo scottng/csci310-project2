@@ -44,8 +44,9 @@ public class MarketActivity extends AppCompatActivity {
 
     private static final String TAG = "MarketActivity";
     public static final int REQUEST_CODE = 3;
-    private int categoryIndex = 5;
-    private int sortIndex = 0;
+    private int categoryIndex = 5;  // all categories
+    private int sortIndex = 1;  // by price
+    private int groupIndex = 0; // for items
 
     // Firebase stuff
     private FirebaseAuth firebaseAuth;
@@ -60,6 +61,8 @@ public class MarketActivity extends AppCompatActivity {
             }
         }
     };
+
+    private ValueEventListener dbListener;
 
     // Array of items
     List<Item> itemsList = new ArrayList<>();
@@ -171,7 +174,7 @@ public class MarketActivity extends AppCompatActivity {
 
         final FirebaseUser currUser = firebaseAuth.getCurrentUser();
         DatabaseReference rootRef = firebaseDatabase.getReference();
-        rootRef.addValueEventListener(new ValueEventListener() {
+        dbListener = rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
@@ -183,24 +186,16 @@ public class MarketActivity extends AppCompatActivity {
                     itemsList.add(item);
                 }
 
-//                for(DataSnapshot dss : dataSnapshot.child("User").getChildren()) {
-//                    User user = dss.getValue(User.class);
-//                    Log.d(TAG, "User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
-//                    userList.add(user);
-//                }
+                for(DataSnapshot dss : dataSnapshot.child("User").getChildren()) {
+                    User user = dss.getValue(User.class);
+                    Log.d(TAG, "User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
+                    userList.add(user);
+                }
 
-                itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, itemsList);
-                list.setAdapter(itemAdapter);
+                // Call "Filter" function to handle all filtering of listed results
+                // including display between items/users
 
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        Intent intent = new Intent(MarketActivity.this, ViewItemActivity.class);
-                        intent.putExtra("Item", itemsList.get(i));
-                        startActivity(intent);
-                    }
-                });
+                displayFilteredResults(itemsList, userList);
             }
 
             @Override
@@ -208,6 +203,40 @@ public class MarketActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void displayFilteredResults(final List<Item> itemsList, final List<User> userList) {
+
+        // for items
+        if (groupIndex == 0) {
+            for(Item item : itemsList) {
+                if (item.getCategory() == 5) {
+                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                } else if (item.getCategory() == categoryIndex) {
+                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                }
+            }
+
+            itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, itemsList);
+            list.setAdapter(itemAdapter);
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    Intent intent = new Intent(MarketActivity.this, ViewItemActivity.class);
+                    intent.putExtra("Item", itemsList.get(i));
+                    startActivity(intent);
+                }
+            });
+        }
+        // for users
+        else {
+            for (User user : userList) {
+                Log.d(TAG, "Filtered User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
+            }
+        }
 
     }
 
@@ -259,6 +288,9 @@ public class MarketActivity extends AppCompatActivity {
         if(authStateListener != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
         }
+        if (dbListener != null) {
+            firebaseDatabase.getReference().removeEventListener(dbListener);
+        }
     }
 
     @Override
@@ -266,15 +298,14 @@ public class MarketActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //on return from picking an image for profile
         if (requestCode== FilterActivity.REQUEST_CODE  && resultCode == RESULT_OK && data!=null) {
-            categoryIndex = data.getIntExtra("categoryIndex", -1);
-            // update search results to display the filtered items
-            sortIndex = data.getIntExtra("sortIndex", -1);
-            Log.d(TAG, "categoryIndex = " + categoryIndex + " sortIndex = " + sortIndex);
-
             // get extra from intent that holds the user selected filter option
+            categoryIndex = data.getIntExtra("categoryIndex", categoryIndex);
+            sortIndex = data.getIntExtra("sortIndex", sortIndex);
+            groupIndex = data.getIntExtra("groupIndex", groupIndex);
+            Log.d(TAG, "categoryIndex = " + categoryIndex + " sortIndex = " + sortIndex + " groupIndex = " + groupIndex);
 
             // update search results to display the filtered items
-
+            displayFilteredResults(itemsList, userList);
 
         }
     }
