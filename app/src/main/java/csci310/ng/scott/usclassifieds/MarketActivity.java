@@ -299,9 +299,13 @@ public class MarketActivity extends AppCompatActivity {
         //on return from picking an image for profile
         if (requestCode== FilterActivity.REQUEST_CODE  && resultCode == RESULT_OK && data!=null) {
             // get extra from intent that holds the user selected filter option
-            categoryIndex = data.getIntExtra("categoryIndex", categoryIndex);
-            sortIndex = data.getIntExtra("sortIndex", sortIndex);
-            groupIndex = data.getIntExtra("groupIndex", groupIndex);
+            int dataCat = data.getIntExtra("categoryIndex", -1);
+            int dataSort = data.getIntExtra("sortIndex", -1);
+            int dataGroup = data.getIntExtra("groupIndex", -1);
+
+            categoryIndex = dataCat == -1 ? categoryIndex : dataCat;
+            sortIndex = dataSort == -1 ? sortIndex : dataSort;
+            groupIndex = dataGroup == -1 ? groupIndex : dataGroup;
             Log.d(TAG, "categoryIndex = " + categoryIndex + " sortIndex = " + sortIndex + " groupIndex = " + groupIndex);
 
             // update search results to display the filtered items
