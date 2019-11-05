@@ -36,9 +36,16 @@
 //import com.google.android.gms.tasks.Task;
 //
 //
+<<<<<<< HEAD
 ///**
 // * An activity that displays a map showing the place at the device's current location.
 // */
+=======
+///*
+// * An activity that displays a map showing the place at the device's current location.
+// */
+//
+>>>>>>> f4cc2286640916e83b69edda71d9bc66f2fd9187
 //public class MapsActivity extends FragmentActivity
 //        implements OnMapReadyCallback {
 //
