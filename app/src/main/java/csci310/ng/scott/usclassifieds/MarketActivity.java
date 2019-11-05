@@ -154,6 +154,18 @@ public class MarketActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
                 itemsList.clear();
+
+                for(DataSnapshot dss : dataSnapshot.child("Item").getChildren()) {
+                    Item item = dss.getValue(Item.class);
+                    Log.d(TAG, "Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                    itemsList.add(item);
+                }
+
+                for(DataSnapshot dss : dataSnapshot.child("User").getChildren()) {
+                    User user = dss.getValue(User.class);
+                    Log.d(TAG, "User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
+                    userList.add(user);
+                }
             }
 
             @Override
