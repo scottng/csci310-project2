@@ -140,7 +140,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     final User userInfo = new User(fullName, email, textBio);
 
                                     if(profilePictureUri != null) {
-                                        mStorageRef = FirebaseStorage.getInstance().getReference().child("pics");
+                                        mStorageRef = FirebaseStorage.getInstance().getReference().child("profile_pics");
                                         final StorageReference imageFilePath = mStorageRef.child(mAuth.getCurrentUser().getUid());
                                         imageFilePath.putFile(profilePictureUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override
