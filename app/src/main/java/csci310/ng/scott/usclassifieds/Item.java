@@ -10,6 +10,8 @@ public class Item {
     private String photoURL;
     private Integer category;
     private String address;
+    private double lat;
+    private double lng;
 
     public Item() {
 
@@ -92,4 +94,12 @@ public class Item {
     }
 
     public String getAddress(){return address;}
+
+    public void setLat(double lat) {this.lat = lat;}
+
+    public double getLat() {return lat;}
+
+    public void setLng(double lng){this.lng = lng;}
+
+    public double getLng(){return lng;}
 }
