@@ -1,6 +1,7 @@
 package csci310.ng.scott.usclassifieds;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -38,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -119,7 +121,8 @@ public class MapsActivity extends FragmentActivity
 
 
         // get items from Market Activity
-        Vector<Item> items = new Vector<Item>();
+        Intent intent = getIntent();
+        ArrayList<Item> items = intent.getParcelableExtra("items");
 
         // add markers for each item
         for (Item item : items){
