@@ -104,6 +104,10 @@ public class SellActivity extends AppCompatActivity {
                 } else {
                     final Item mItem = new Item();
 
+                    // ADD PHOTO AND ITEM TO DATABASE
+                    final String currentTime = String.valueOf(System.currentTimeMillis());
+
+                    mItem.setItemID(mAuth.getCurrentUser().getUid() + "-" + currentTime);
                     mItem.setSellerID(mAuth.getCurrentUser().getUid());
                     mItem.setTitle(editTextTitle.getText().toString());
                     mItem.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
@@ -112,10 +116,6 @@ public class SellActivity extends AppCompatActivity {
 
                     int index = radioGroupSellCategory.indexOfChild(findViewById(radioGroupSellCategory.getCheckedRadioButtonId()));
                     mItem.setCategory(index);
-
-
-                    // ADD PHOTO AND ITEM TO DATABASE
-                    final String currentTime = String.valueOf(System.currentTimeMillis());
 
                     // Create storage ref name
                     mStorageRef = FirebaseStorage.getInstance().getReference().child("item_pics");
@@ -129,7 +129,7 @@ public class SellActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     mItem.setPhotoURL(uri.toString());
 
-                                    dbRef.child(mAuth.getCurrentUser().getUid() + "-" + currentTime)
+                                    dbRef.child(mItem.getItemID())
                                             .setValue(mItem).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

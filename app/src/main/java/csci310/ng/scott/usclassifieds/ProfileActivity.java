@@ -3,6 +3,7 @@ package csci310.ng.scott.usclassifieds;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,11 +92,11 @@ public class ProfileActivity extends AppCompatActivity {
         };
 
         final FirebaseUser currUser = firebaseAuth.getCurrentUser();
-        DatabaseReference userRef = firebaseDatabase.getReference().child("User");
-        userRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference rootRef = firebaseDatabase.getReference();
+        rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User currUserInfo = dataSnapshot.child(currUser.getUid()).getValue(User.class);
+                User currUserInfo = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
 
                 textProfileName.setText(currUserInfo.getFullName());
                 if (!currUserInfo.getTextBio().equals("")) {
@@ -105,6 +109,12 @@ public class ProfileActivity extends AppCompatActivity {
                 if (!currUserInfo.getProfilePic().equals("")) {
                     Glide.with(getApplicationContext())
                             .load(currUserInfo.getProfilePic()).into(imageProfilePicture);
+                }
+
+                for(DataSnapshot dss : dataSnapshot.child("Item").getChildren()) {
+
+                    Item myItem = dss.getValue(Item.class);
+                    Log.d("Found Item", "Item " + myItem.getItemID());
                 }
             }
 
