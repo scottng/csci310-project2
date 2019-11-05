@@ -56,7 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //set selected item depending on Activity
         navigation.setSelectedItemId(R.id.navigation_profile);
-
     }
 
     @Override
