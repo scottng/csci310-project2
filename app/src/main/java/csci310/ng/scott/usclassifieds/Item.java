@@ -11,12 +11,15 @@ public class Item implements Serializable {
     private Boolean sold;
     private String photoURL;
     private Integer category;
+    private String address;
+    private double lat;
+    private double lng;
 
     public Item() {
 
     }
 
-    public Item(String itemID, String sellerID, String title, String description, double price, Boolean sold, String photoURL, Integer category) {
+    public Item(String itemID, String sellerID, String title, String description, double price, Boolean sold, String photoURL, Integer category, String addy) {
         this.itemID = itemID;
         this.sellerID = sellerID;
         this.title = title;
@@ -25,6 +28,7 @@ public class Item implements Serializable {
         this.sold = sold;
         this.photoURL = photoURL;
         this.category = category;
+        this.address = addy;
     }
 
     public String getItemID() {
@@ -90,4 +94,14 @@ public class Item implements Serializable {
     public void setCategory(Integer category) {
         this.category = category;
     }
+
+    public String getAddress(){return address;}
+
+    public void setLat(double lat) {this.lat = lat;}
+
+    public double getLat() {return lat;}
+
+    public void setLng(double lng){this.lng = lng;}
+
+    public double getLng(){return lng;}
 }

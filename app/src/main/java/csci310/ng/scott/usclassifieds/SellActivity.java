@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +42,10 @@ public class SellActivity extends AppCompatActivity {
     private Uri itemPicUri;
     private StorageReference mStorageRef;
 
+    // current location info
+    private FusedLocationProviderClient fusedLocationClient;
+    private LatLng loc;
+
     // UI Elements
     Button buttonCancel;
     ImageView imageButtonItemPicture;
@@ -47,6 +55,9 @@ public class SellActivity extends AppCompatActivity {
     Button buttonPostItem;
     RadioGroup radioGroupSellCategory;
 
+    private double lat;
+    private double lng;
+
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
@@ -54,6 +65,21 @@ public class SellActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
+
+        // set up location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // create location for selling item
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    lat = location.getLatitude();
+                    lng = location.getLongitude();
+//                    loc = new LatLng(lat, lng);
+                }
+            }
+        });
 
         // Get mAuth
         mAuth = FirebaseAuth.getInstance();
@@ -102,6 +128,7 @@ public class SellActivity extends AppCompatActivity {
                 } else if (itemPicUri == null) {
                     Toast.makeText(getApplicationContext(), "Picture cannot be empty", Toast.LENGTH_LONG).show();
                 } else {
+
                     final Item mItem = new Item();
 
                     // ADD PHOTO AND ITEM TO DATABASE
@@ -113,6 +140,10 @@ public class SellActivity extends AppCompatActivity {
                     mItem.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
                     mItem.setDescription(editTextDescription.getText().toString());
                     mItem.setSold(false);
+                    mItem.setLat(lat);
+                    mItem.setLng(lng);
+
+
 
                     int index = radioGroupSellCategory.indexOfChild(findViewById(radioGroupSellCategory.getCheckedRadioButtonId()));
                     mItem.setCategory(index);
@@ -120,6 +151,7 @@ public class SellActivity extends AppCompatActivity {
                     // Create storage ref name
                     mStorageRef = FirebaseStorage.getInstance().getReference().child("item_pics");
                     final StorageReference imageFilePath = mStorageRef.child(mAuth.getCurrentUser().getUid() + "-" + currentTime);
+
 
                     imageFilePath.putFile(itemPicUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
