@@ -80,6 +80,50 @@
             app:layout_constraintTop_toBottomOf="@id/edit_text_price"
             android:hint="@string/sell_text_description"/>
 
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_group_sell_category"
+            android:checkedButton="@id/radio_electronics"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_description">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_electronics"
+                android:text="Electronics"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_textbooks"
+                android:text="Textbooks"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_clothes"
+                android:text="Clothes"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_transportation"
+                android:text="Transportation"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_miscellaneous"
+                android:text="Miscellaneous"
+                />
+
+        </RadioGroup>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
