@@ -41,7 +41,6 @@
                 android:text="0.2 mi"
                 />
 
-
             <TextView
                 android:id="@+id/list_item_name"
                 android:layout_width="wrap_content"

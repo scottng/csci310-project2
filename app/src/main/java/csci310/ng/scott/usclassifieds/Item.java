@@ -1,6 +1,8 @@
 package csci310.ng.scott.usclassifieds;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
     private String itemID;
     private String sellerID;
     private String title;

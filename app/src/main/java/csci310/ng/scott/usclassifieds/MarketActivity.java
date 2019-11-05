@@ -23,15 +23,20 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.GridView;
 import androidx.appcompat.widget.SearchView;
+
+import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +76,8 @@ public class MarketActivity extends AppCompatActivity {
     private ItemAdapter adapter;
     private BottomNavigationView navigation;
 
+    ListView list;
+    ItemListAdapter itemAdapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -112,11 +119,12 @@ public class MarketActivity extends AppCompatActivity {
         navigation.setSelectedItemId(R.id.navigation_market);
 
         // Link UI elements
-        gridViewItems = findViewById(R.id.grid_items);
+        //gridViewItems = findViewById(R.id.grid_items);
         fabAddItem = findViewById(R.id.fab_add_item);
         buttonFilter = findViewById(R.id.button_filter);
         buttonMap = findViewById(R.id.button_map);
         searchMarket = findViewById(R.id.search_market);
+        list = (ListView) findViewById(R.id.list_items);
 
         // Set FAB listener
         fabAddItem.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +167,8 @@ public class MarketActivity extends AppCompatActivity {
             }
         });
 
+
+
         final FirebaseUser currUser = firebaseAuth.getCurrentUser();
         DatabaseReference rootRef = firebaseDatabase.getReference();
         rootRef.addValueEventListener(new ValueEventListener() {
@@ -173,11 +183,24 @@ public class MarketActivity extends AppCompatActivity {
                     itemsList.add(item);
                 }
 
-                for(DataSnapshot dss : dataSnapshot.child("User").getChildren()) {
-                    User user = dss.getValue(User.class);
-                    Log.d(TAG, "User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
-                    userList.add(user);
-                }
+//                for(DataSnapshot dss : dataSnapshot.child("User").getChildren()) {
+//                    User user = dss.getValue(User.class);
+//                    Log.d(TAG, "User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
+//                    userList.add(user);
+//                }
+
+                itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, itemsList);
+                list.setAdapter(itemAdapter);
+
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        Intent intent = new Intent(MarketActivity.this, ViewItemActivity.class);
+                        intent.putExtra("Item", itemsList.get(i));
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override

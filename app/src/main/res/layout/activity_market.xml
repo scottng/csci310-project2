@@ -43,19 +43,18 @@
         android:textColor="@color/colorWhite"
         />
 
-    <GridView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/grid_items"
+        android:id="@+id/list_items"
         app:layout_constraintTop_toBottomOf="@id/search_market"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/navigation"
         tools:listitem="@layout/layout_item"
-        android:numColumns="2"
         >
 
-    </GridView>
+    </ListView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
