@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -26,9 +28,11 @@ public class MarketActivity extends AppCompatActivity {
     private static final String TAG = "MarketActivity";
     public static final int REQUEST_CODE = 3;
 
+    // UI Elements
     // private TextView mTextMessage;
     private GridView gridViewItems;
     private FloatingActionButton fabAddItem;
+    private Button buttonFilter;
 
     private ItemAdapter adapter;
     private BottomNavigationView navigation;
@@ -73,7 +77,9 @@ public class MarketActivity extends AppCompatActivity {
         // Link UI elements
         gridViewItems = findViewById(R.id.grid_items);
         fabAddItem = findViewById(R.id.fab_add_item);
+        buttonFilter = findViewById(R.id.button_filter);
 
+        // Set FAB listener
         fabAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,10 +88,19 @@ public class MarketActivity extends AppCompatActivity {
             }
         });
 
+        // Set filter button listener
+        buttonFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent j = new Intent(getApplicationContext(), FilterActivity.class);
+                startActivityForResult(j, FilterActivity.REQUEST_CODE);
+            }
+        });
 
 
     }
 
+    // Adapter for items
     private class ItemAdapter extends ArrayAdapter<Item> {
         private List<Item> items;
 
@@ -114,9 +129,27 @@ public class MarketActivity extends AppCompatActivity {
 
     }
 
+    // Not sure what this does
     @Override
     protected void onResume() {
         super.onResume();
         navigation.setSelectedItemId(R.id.navigation_market);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //on return from picking an image for profile
+        if (requestCode== FilterActivity.REQUEST_CODE  && resultCode == RESULT_OK && data!=null) {
+            data.getIntExtra(FilterActivity.SELECTED_FILTER, -1);
+
+            // get extra from intent that holds the user selected filter option
+
+            // update search results to display the filtered items
+
+
+        }
+    }
+
+
 }

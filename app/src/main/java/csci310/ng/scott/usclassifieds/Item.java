@@ -8,12 +8,13 @@ public class Item {
     private double price;
     private Boolean sold;
     private String photoURL;
+    private Integer category;
 
     public Item() {
 
     }
 
-    public Item(String itemID, String sellerID, String title, String description, double price, Boolean sold, String photoURL) {
+    public Item(String itemID, String sellerID, String title, String description, double price, Boolean sold, String photoURL, Integer category) {
         this.itemID = itemID;
         this.sellerID = sellerID;
         this.title = title;
@@ -21,6 +22,7 @@ public class Item {
         this.price = price;
         this.sold = sold;
         this.photoURL = photoURL;
+        this.category = category;
     }
 
     public String getItemID() {
@@ -77,5 +79,13 @@ public class Item {
 
     public void setPhotoURL(String photoURL) {
         this.photoURL = photoURL;
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
     }
 }
