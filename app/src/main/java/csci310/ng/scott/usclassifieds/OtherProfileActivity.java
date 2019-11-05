@@ -17,10 +17,6 @@ public class OtherProfileActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ListView list = (ListView) findViewById(R.id.list_items_in_other_profile);
-         ArrayList<Item> itemList = new ArrayList<Item>();
 
-        ItemListAdapter adapter = new ItemListAdapter(this, R.layout.layout_item, itemList);
-        list.setAdapter(adapter);
     }
 }
