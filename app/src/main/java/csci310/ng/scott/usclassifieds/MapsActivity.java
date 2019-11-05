@@ -122,29 +122,8 @@ public class MapsActivity extends FragmentActivity
 
         // add markers for each item
         for (Item item : items){
-            LatLng loc = getLatLng(item.getAddress());
+            LatLng loc = new LatLng(item.getLat(), item.getLng());
             map.addMarker(new MarkerOptions().position(loc).title(item.getTitle()));
-        }
-
-    }
-
-    public LatLng getLatLng(String addy){
-        // change string address to lat long
-        Geocoder coder = new Geocoder(this);
-        List<Address> address;
-        LatLng loc = null;
-
-        try{
-            address = coder.getFromLocationName(addy, 5);
-            if (address == null){
-                return new LatLng(34.0522, 118.2437);
-            }
-            Address location = address.get(0);
-            loc = new LatLng(location.getLatitude(), location.getLongitude());
-            return loc;
-
-        } catch (IOException e){
-            return new LatLng(34.0522, 118.2437);
         }
 
     }
