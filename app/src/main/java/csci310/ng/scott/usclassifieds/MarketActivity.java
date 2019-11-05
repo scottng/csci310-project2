@@ -268,6 +268,7 @@ public class MarketActivity extends AppCompatActivity {
         }
 
     }
+    
 
     // Not sure what this does
     @Override
@@ -310,6 +311,11 @@ public class MarketActivity extends AppCompatActivity {
 
             // update search results to display the filtered items
             displayFilteredResults(itemsList, userList);
+
+        }
+        if(requestCode == ProfileActivity.REQUEST_CODE && resultCode == RESULT_OK && data !=null){
+            User temp = (User) data.getSerializableExtra("User");
+            Log.d(TAG, "user name" + temp.getFullName());
 
         }
     }

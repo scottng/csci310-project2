@@ -33,6 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener authStateListener;
+    public static final int REQUEST_CODE = 123;
 
     // UI Elements
     private Button searchUser;
