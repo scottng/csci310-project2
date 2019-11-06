@@ -5,12 +5,14 @@ public class Notification {
     private String senderImgURL;
     private String receiverUid;
     private String message;
+    private int accepted;
 
     public Notification(String senderUid, String senderImgURL, String receiverUid, String message) {
         this.senderUid = senderUid;
         this.senderImgURL = senderImgURL;
         this.receiverUid = receiverUid;
         this.message = message;
+        accepted = 0;
     }
 
     public Notification() {
