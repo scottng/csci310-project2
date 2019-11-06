@@ -105,7 +105,7 @@ public class OtherProfileActivity extends Activity {
             @Override
             public void onClick(View v) {
                 FirebaseUser currUser = firebaseAuth.getCurrentUser();
-                Notification notification = new Notification(currUser.getUid(), user.getUserID(), currUser.getDisplayName() + " requested to follow you.");
+                Notification notification = new Notification(currUser.getUid(), currUser.getPhotoUrl().toString(), user.getUserID(), currUser.getDisplayName() + " requested to follow you.");
 
                 firebaseDatabase.getReference("Notification").child(currUser.getUid() + user.getUserID()).setValue(notification)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
