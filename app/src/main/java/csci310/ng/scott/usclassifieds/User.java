@@ -1,9 +1,8 @@
 package csci310.ng.scott.usclassifieds;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
     private String profilePic;
@@ -12,6 +11,8 @@ public class User implements Serializable {
     private String phone;
     private String userID;
     private String textBio;
+    private List<String> friendList;
+    private int sold;
 
     public User() {}
 
@@ -22,6 +23,8 @@ public class User implements Serializable {
         this.phone = "";
         this.userID = "";
         this.textBio = textBio;
+        friendList = new ArrayList<>();
+        sold = 0;
     }
 
     public String getProfilePic() {
@@ -48,6 +51,14 @@ public class User implements Serializable {
         return textBio;
     }
 
+    public List<String> getFriendList() {
+        return friendList;
+    }
+
+    public int getSold() {
+        return sold;
+    }
+
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
@@ -70,5 +81,29 @@ public class User implements Serializable {
 
     public void setTextBio(String textBio) {
         this.textBio = textBio;
+    }
+
+    public void setFriendList(List<String> friendList) {
+        this.friendList = friendList;
+    }
+
+    public void setSold(int sold) {
+        this.sold = sold;
+    }
+
+    public void addFriend(String uid) {
+        this.friendList.add(uid);
+    }
+
+    public void removeFriend(String uid) {
+        this.friendList.remove(uid);
+    }
+
+    public boolean isFriendsWith(String uid) {
+        return this.friendList.contains(uid);
+    }
+
+    public void incrementSold() {
+        this.sold++;
     }
 }
