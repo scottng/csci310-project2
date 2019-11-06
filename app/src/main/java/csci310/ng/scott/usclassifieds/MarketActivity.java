@@ -345,7 +345,6 @@ public class MarketActivity extends AppCompatActivity {
 
             TextView textTitle = convertView.findViewById(R.id.list_item_name);
             TextView textPrice = convertView.findViewById(R.id.list_item_price);
-            TextView textDistance = convertView.findViewById(R.id.list_item_distance);
 
             textTitle.setText(curr.getTitle());
             textPrice.setText(Double.toString(curr.getPrice()));
