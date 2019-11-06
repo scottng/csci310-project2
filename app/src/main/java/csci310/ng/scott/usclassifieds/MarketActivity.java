@@ -143,6 +143,11 @@ public class MarketActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent k = new Intent(getApplicationContext(), MapsActivity.class);
+                Log.d(TAG, "trying to send items " + itemsList.size());
+                k.putExtra("numItems", itemsList.size());
+                for (int i=0;i<itemsList.size();i++){
+                    k.putExtra("item" + i, itemsList.get(i));
+                }
                 startActivityForResult(k, MapsActivity.REQUEST_CODE);
             }
         });
