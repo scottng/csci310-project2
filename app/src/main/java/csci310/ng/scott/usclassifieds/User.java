@@ -12,7 +12,6 @@ public class User implements Serializable {
     private String phone;
     private String userID;
     private String textBio;
-    private ArrayList<String> friends;
 
     public User() {}
 
@@ -24,12 +23,7 @@ public class User implements Serializable {
         this.userID = "";
         this.textBio = textBio;
     }
-    public ArrayList<String> getFriends(){
-        return friends;
-    }
-    public boolean isFriends(String uid){
-        return friends.contains(uid);
-    }
+
     public String getProfilePic() {
         return profilePic;
     }
@@ -52,10 +46,6 @@ public class User implements Serializable {
 
     public String getTextBio() {
         return textBio;
-    }
-
-    public void addFriends(String uid){
-        friends.add(uid);
     }
 
     public void setProfilePic(String profilePic) {

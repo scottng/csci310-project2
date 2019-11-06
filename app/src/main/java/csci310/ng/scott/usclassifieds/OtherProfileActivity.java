@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +26,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -35,6 +41,8 @@ public class OtherProfileActivity extends Activity {
     // Firebase stuff
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
+
+    public static final String TAG = "OtherProfileActivity";
 
     private Button searchUser;
     CircleImageView imageProfilePicture;
@@ -104,20 +112,36 @@ public class OtherProfileActivity extends Activity {
         followUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser currUser = firebaseAuth.getCurrentUser();
-                Notification notification = new Notification(currUser.getUid(), currUser.getPhotoUrl().toString(), user.getUserID(), currUser.getDisplayName() + " requested to follow you.");
+                final FirebaseUser currUser = firebaseAuth.getCurrentUser();
+                // Log.d(TAG, "curr user info is displayName " + currUser.getDisplayName() + " with email " + currUser.getEmail());
+                DatabaseReference userRef = firebaseDatabase.getReference("User");
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User currUserInfo = dataSnapshot.child(currUser.getUid()).getValue(User.class);
 
-                firebaseDatabase.getReference("Notification").child(currUser.getUid() + user.getUserID()).setValue(notification)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()) {
-                                    Toast.makeText(OtherProfileActivity.this, "Your request has been sent.", Toast.LENGTH_SHORT).show();
-                                    followUser.setClickable(false);
-                                    followUser.setText("Requested");
-                                }
-                            }
-                        });
+                        Notification notification = new Notification(currUserInfo.getUserID(), "", user.getUserID(), currUserInfo.getFullName() + " requested to follow you.");
+                        if (TextUtils.isEmpty(currUserInfo.getProfilePic())) {
+                            notification.setSenderImgURL(currUserInfo.getProfilePic());
+                        }
+                        firebaseDatabase.getReference("Notification").child(currUser.getUid() + user.getUserID()).setValue(notification)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()) {
+                                            Toast.makeText(OtherProfileActivity.this, "Your request has been sent.", Toast.LENGTH_SHORT).show();
+                                            followUser.setClickable(false);
+                                            followUser.setText("Requested");
+                                        }
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
     }

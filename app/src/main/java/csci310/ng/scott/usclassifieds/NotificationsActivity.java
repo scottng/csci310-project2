@@ -3,11 +3,20 @@ package csci310.ng.scott.usclassifieds;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -24,22 +34,28 @@ public class NotificationsActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
     private BottomNavigationView navigation;
+    public final String TAG = "NotificationActivity";
 
+    // UI Elements
+    ListView mylist;
+    private TextView results;
     // Firebase stuff
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener authStateListener;
-
     private List<Notification> notifications = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_notifications);
 
+        // Link UI
+        mylist = (ListView) findViewById(R.id.list_notifications);
+        results = findViewById(R.id.results_not);
+        // Get Firebase refs
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-        setContentView(R.layout.activity_notifications);
         navigation = findViewById(R.id.navigationNote);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -64,6 +80,9 @@ public class NotificationsActivity extends AppCompatActivity {
         //set selected item depending on Activity
         navigation.setSelectedItemId(R.id.navigation_notifications);
 
+
+
+
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -83,13 +102,21 @@ public class NotificationsActivity extends AppCompatActivity {
 
                 for (DataSnapshot dss : dataSnapshot.getChildren()) {
                     Notification notification = dss.getValue(Notification.class);
-
-                    if (notification.getReceiverUid() == firebaseAuth.getCurrentUser().getUid()) {
+                    Log.d(TAG, "Notifications is " + notification.getMessage());
+                    if (notification.getReceiverUid().equals(firebaseAuth.getCurrentUser().getUid())) {
                         notifications.add(notification);
                     }
                 }
-
+                Log.d(TAG, "size of notifications is " + notifications.size());
                 // item adapter here
+                NotificationListAdapter adapter = new NotificationListAdapter(getApplicationContext(), R.layout.layout_notification, notifications);
+                mylist.setAdapter(adapter);
+                if(notifications.size() == 0){
+                    results.setVisibility(View.VISIBLE);
+                }
+                else{
+                    results.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -99,6 +126,7 @@ public class NotificationsActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     protected void onResume() {
