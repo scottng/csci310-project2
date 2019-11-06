@@ -31,15 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-            <TextView
-                android:id="@+id/list_item_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/image_item"
-                app:layout_constraintTop_toTopOf="@id/image_item"
-                android:layout_margin="4dp"
-                android:text="0.2 mi"
-                />
+         
 
             <TextView
                 android:id="@+id/list_item_name"
