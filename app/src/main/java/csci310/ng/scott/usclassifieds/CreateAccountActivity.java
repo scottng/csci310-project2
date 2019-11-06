@@ -119,6 +119,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
 
                 // check field is not empty
+                if (password.length() < 6) {
+                    Toast.makeText(CreateAccountActivity.this, "Password must be longer than 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // check field is not empty
                 if (TextUtils.isEmpty(fullName)) {
                     Toast.makeText(CreateAccountActivity.this, "Please Re-Enter Password", Toast.LENGTH_SHORT).show();
                     return;
