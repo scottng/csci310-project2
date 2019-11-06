@@ -75,6 +75,8 @@ public class MarketActivity extends AppCompatActivity {
     private Button buttonFilter;
     private Button buttonMap;
     private SearchView searchMarket;
+    private User searchUser;
+    private TextView results;
 
     private ItemAdapter adapter;
     private BottomNavigationView navigation;
@@ -129,6 +131,7 @@ public class MarketActivity extends AppCompatActivity {
         buttonFilter = findViewById(R.id.button_filter);
         buttonMap = findViewById(R.id.button_map);
         searchMarket = findViewById(R.id.search_market);
+        results = findViewById(R.id.results);
         list = (ListView) findViewById(R.id.list_items);
 
         // Set FAB listener
@@ -171,6 +174,16 @@ public class MarketActivity extends AppCompatActivity {
                 return false;
             }
         });
+        searchUser = null;
+        // Get Intent from ProfileActivity SearchByUser
+        if(getIntent() != null){
+            Intent searchByUserIntent = getIntent();
+            searchUser = (User) searchByUserIntent.getSerializableExtra("User");
+            if(searchUser != null){
+                Log.d(TAG, "It worked!!! " + searchUser.getFullName());
+            }
+
+        }
 
 
 
@@ -186,6 +199,7 @@ public class MarketActivity extends AppCompatActivity {
                     Item item = dss.getValue(Item.class);
                     Log.d(TAG, "Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
                     itemsList.add(item);
+
                 }
 
                 for(DataSnapshot dss : dataSnapshot.child("User").getChildren()) {
@@ -212,15 +226,29 @@ public class MarketActivity extends AppCompatActivity {
 
         // for items
         if (groupIndex == 0) {
+            final List<Item> filteredList = new ArrayList<>();
             for(Item item : itemsList) {
-                if (item.getCategory() == 5) {
-                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
-                } else if (item.getCategory() == categoryIndex) {
-                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                if(searchUser != null){
+                    if(item.getSellerID().equals(searchUser.getUserID())){
+                        filteredList.add(item);
+                    }
+                }else{
+                    if (item.getCategory() == 5) {
+                        Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                    } else if (item.getCategory() == categoryIndex) {
+                        Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                    }
+                    filteredList.add(item);
                 }
             }
 
-            itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, itemsList);
+            if(filteredList.size() == 0){
+                results.setVisibility(View.VISIBLE);
+            }
+            else{
+                results.setVisibility(View.INVISIBLE);
+            }
+            itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, filteredList);
             list.setAdapter(itemAdapter);
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -228,7 +256,7 @@ public class MarketActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                     Intent intent = new Intent(MarketActivity.this, ViewItemActivity.class);
-                    intent.putExtra("Item", itemsList.get(i));
+                    intent.putExtra("Item", filteredList.get(i));
                     startActivity(intent);
                 }
             });
@@ -237,6 +265,12 @@ public class MarketActivity extends AppCompatActivity {
         else {
             for (User user : userList) {
                 Log.d(TAG, "Filtered User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
+            }
+            if(userList.size() == 0){
+                results.setVisibility(View.VISIBLE);
+            }
+            else{
+                results.setVisibility(View.INVISIBLE);
             }
             userAdapter = new UserListAdapter(getApplicationContext(), R.layout.layout_user, userList);
             list.setAdapter(userAdapter);
@@ -326,6 +360,7 @@ public class MarketActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //on return from picking an image for profile
         if (requestCode== FilterActivity.REQUEST_CODE  && resultCode == RESULT_OK && data!=null) {
+            searchUser = null;
             // get extra from intent that holds the user selected filter option
             int dataCat = data.getIntExtra("categoryIndex", -1);
             int dataSort = data.getIntExtra("sortIndex", -1);
@@ -340,11 +375,7 @@ public class MarketActivity extends AppCompatActivity {
             displayFilteredResults(itemsList, userList);
 
         }
-        if(requestCode == ProfileActivity.REQUEST_CODE && resultCode == RESULT_OK && data !=null){
-            User temp = (User) data.getSerializableExtra("User");
-            Log.d(TAG, "user name" + temp.getFullName());
 
-        }
     }
 
 
