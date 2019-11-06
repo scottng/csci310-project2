@@ -19,6 +19,7 @@
         />
 
     <Button
+        android:id="@+id/buttonSignOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/LongButton"

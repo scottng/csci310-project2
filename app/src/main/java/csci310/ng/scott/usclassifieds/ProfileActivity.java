@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView textProfileName;
     TextView textProfileBio;
     TextView textProfileBodyEmail;
+    Button signOutButton;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
     private BottomNavigationView navigation;
 
@@ -59,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
         searchUser = findViewById(R.id.search_user);
         textProfileBodyEmail = findViewById(R.id.text_profile_body_email);
         navigation= findViewById(R.id.navigation);
+        signOutButton = findViewById(R.id.buttonSignOut);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -117,12 +119,22 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Set Search User functionality
         searchUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MarketActivity.class);
                 intent.putExtra("User", currUserInfo[0]);
                 startActivity(intent);
+            }
+        });
+
+        //set up Sign Out Button Listener
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+
             }
         });
 
