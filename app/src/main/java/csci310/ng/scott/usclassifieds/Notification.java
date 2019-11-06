@@ -13,6 +13,10 @@ public class Notification {
         this.message = message;
     }
 
+    public Notification() {
+
+    }
+
     public String getSenderUid() {
         return senderUid;
     }
