@@ -23,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewItemActivity extends AppCompatActivity {
@@ -38,11 +41,12 @@ public class ViewItemActivity extends AppCompatActivity {
     private TextView textViewEmail;
     private TextView textViewFilter;
     private Button markSoldButton;
-    private ImageButton upButton;
+    private ImageView upButton;
     private CircleImageView circleImageViewUserPic;
     private Item item;
     private User sellerUser;
     private FirebaseAuth firebaseAuth;
+    private int userSellCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,7 @@ public class ViewItemActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //set UI elements on callback
                 sellerUser = dataSnapshot.child("User").child(item.getSellerID()).getValue(User.class);
+                userSellCount = sellerUser.getSold();
                 textViewUserName.setText(sellerUser.getFullName());
                 textViewEmail.setText(sellerUser.getEmail());
 
@@ -127,6 +132,10 @@ public class ViewItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteItem(item.getItemID());
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                Map<String, Object> map = new HashMap<>();
+                map.put("sold", userSellCount+1);
+                rootRef.child("User").child(currUser.getUid()).updateChildren(map);
             }
         });
 

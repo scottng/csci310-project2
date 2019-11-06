@@ -117,6 +117,29 @@
         app:layout_constraintTop_toBottomOf="@id/text_profile_body_email"
         android:layout_margin="24dp"/>
 
+    <TextView
+        android:id="@+id/badgesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Heading1"
+        android:layout_marginTop="32dp"
+        android:text="Badges:"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_user"
+        />
+
+
+    <TextView
+        style="@style/Heading2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newUserBadge"
+        android:textColor="@color/colorAction"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/badgesTitle" />
+
 
 
 
