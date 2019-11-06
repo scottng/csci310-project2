@@ -56,6 +56,9 @@ public class FilterActivity extends AppCompatActivity {
                 int groupIndex = radioGroupSearch.indexOfChild(findViewById(radioGroupSearch.getCheckedRadioButtonId()));
                 i.putExtra("groupIndex", groupIndex);
 
+                User temp = null;
+                i.putExtra("User", temp);
+
                 setResult(RESULT_OK, i);
 
                 finish();
