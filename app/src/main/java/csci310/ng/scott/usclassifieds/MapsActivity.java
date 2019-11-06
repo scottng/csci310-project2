@@ -31,12 +31,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import com.google.android.gms.maps.model.BitmapDescriptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ import java.util.Vector;
  * An activity that displays a map showing the place at the device's current location.
  */
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -97,6 +100,7 @@ public class MapsActivity extends FragmentActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
     }
 
 
@@ -109,6 +113,15 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+              public boolean onMarkerClick(Marker marker) {
+                  Log.d(TAG, "in the on click for a marker");
+                  marker.showInfoWindow();
+                  return false;
+              }
+        });
+       // mMap.setOnMarkerClickListener(this);
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -119,22 +132,46 @@ public class MapsActivity extends FragmentActivity
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-        Log.d(TAG, "about get get intent info");
+        Log.d(TAG, "about to get intent info");
 
         // get items from Market Activity
-        Intent intent = getIntent();
-        ArrayList<Item> items = intent.getParcelableExtra("items");
+//        Intent intent = getIntent();
+//        int numItems = intent.getIntExtra("numItems", 0);
+//
+//        for (int i=0;i<numItems;i++){
+//            Log.d(TAG, "trying to add markers");
+//            Item hold = (Item)intent.getSerializableExtra("item" + i);
+//            LatLng loc = new LatLng(hold.getLat(), hold.getLng());
+//
+//            mMap.addMarker(new MarkerOptions().position(loc).title(hold.getTitle()).snippet('$' + Double.toString(hold.getPrice())));
+//            Log.d(TAG, hold.getTitle());
+//        }
 
-        // add markers for each item
-        if (items != null){
-            for (Item item : items){
-                LatLng loc = new LatLng(item.getLat(), item.getLng());
-                mMap.addMarker(new MarkerOptions().position(loc).title(item.getTitle()));
-                Log.d(TAG, "adding a marker");
-            }
+        Intent intent = getIntent();
+        int numItems = intent.getIntExtra("numItems", 0);
+
+        for (int i=0;i<numItems;i++){
+            Log.d(TAG, "adding item " + i);
+            Item hold = (Item)intent.getSerializableExtra("item" + i);
+            LatLng loc = new LatLng(hold.getLat(), hold.getLng());
+
+           Marker itemMarker =  mMap.addMarker(new MarkerOptions().position(loc).title(hold.getTitle())
+                   .snippet('$' + Double.toString(hold.getPrice())));
+           itemMarker.showInfoWindow();
+           itemMarker.setTag(hold);
+           Log.d(TAG, hold.getTitle());
         }
+
+
+
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Log.d(TAG, "in the on click for a marker");
+        marker.showInfoWindow();
+        return false;
+    }
 
     /**
      * Gets the current location of the device, and positions the map's camera.

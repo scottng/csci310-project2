@@ -1,5 +1,8 @@
 package csci310.ng.scott.usclassifieds;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 public class Item implements Serializable {
@@ -104,4 +107,5 @@ public class Item implements Serializable {
     public void setLng(double lng){this.lng = lng;}
 
     public double getLng(){return lng;}
+
 }
