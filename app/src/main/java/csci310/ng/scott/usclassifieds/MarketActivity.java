@@ -26,18 +26,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.GridView;
 import androidx.appcompat.widget.SearchView;
 
 import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MarketActivity extends AppCompatActivity {
@@ -176,6 +174,7 @@ public class MarketActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d(TAG, "New Query " + newText);
+                displayFilteredResults(itemsList, userList, newText);
                 return false;
             }
         });
@@ -216,7 +215,7 @@ public class MarketActivity extends AppCompatActivity {
                 // Call "Filter" function to handle all filtering of listed results
                 // including display between items/users
 
-                displayFilteredResults(itemsList, userList);
+                displayFilteredResults(itemsList, userList, "");
             }
 
             @Override
@@ -227,24 +226,51 @@ public class MarketActivity extends AppCompatActivity {
 
     }
 
-    private void displayFilteredResults(final List<Item> itemsList, final List<User> userList) {
+    private void displayFilteredResults(final List<Item> itemsList, final List<User> userList, String query) {
 
         // for items
         if (groupIndex == 0) {
             final List<Item> filteredList = new ArrayList<>();
-            for(Item item : itemsList) {
-                if(searchUser != null){
-                    if(item.getSellerID().equals(searchUser.getUserID())){
-                        filteredList.add(item);
+            for (Item item : itemsList) {
+                if (query.equals("")) {
+                    if(searchUser != null) {
+                        if(item.getSellerID().equals(searchUser.getUserID())) {
+                            filteredList.add(item);
+                        }
+                    } else {
+                        if (categoryIndex == 5) {
+                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                            filteredList.add(item);
+                        } else if (item.getCategory() == categoryIndex) {
+                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                            filteredList.add(item);
+                        }
                     }
-                }else{
-                    if (item.getCategory() == 5) {
-                        Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
-                    } else if (item.getCategory() == categoryIndex) {
-                        Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                } else if (item.getTitle().toLowerCase().contains(query.toLowerCase())
+                        || item.getDescription().toLowerCase().contains(query.toLowerCase())) {
+                    if(searchUser != null) {
+                        if(item.getSellerID().equals(searchUser.getUserID())) {
+                            filteredList.add(item);
+                        }
+                    } else {
+                        if (categoryIndex == 5) {
+                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                            filteredList.add(item);
+                        } else if (item.getCategory() == categoryIndex) {
+                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                            filteredList.add(item);
+                        }
                     }
-                    filteredList.add(item);
                 }
+            }
+
+            if (sortIndex == 1) {
+                Collections.sort(filteredList, new Comparator<Item>() {
+                    @Override
+                    public int compare(Item i1, Item i2) {
+                        return new Double(i1.getPrice()).compareTo(new Double(i2.getPrice()));
+                    }
+                });
             }
 
             if(filteredList.size() == 0){
@@ -268,22 +294,31 @@ public class MarketActivity extends AppCompatActivity {
         }
         // for users
         else {
+            final List<User> filteredUsers = new ArrayList<>();
             for (User user : userList) {
+                if (query.equals("")) {
+                    filteredUsers.add(user);
+                } else if (user.getEmail().toLowerCase().contains(query.toLowerCase())
+                        || user.getFullName().toLowerCase().contains(query.toLowerCase())
+                        || user.getTextBio().toLowerCase().contains(query.toLowerCase())
+                        || user.getPhone().toLowerCase().contains(query.toLowerCase())) {
+                    filteredUsers.add(user);
+                }
                 Log.d(TAG, "Filtered User " + user.getUserID() + " is " + user.getFullName() + " with email " + user.getEmail());
             }
-            if(userList.size() == 0){
+            if(filteredUsers.size() == 0){
                 results.setVisibility(View.VISIBLE);
             }
             else{
                 results.setVisibility(View.INVISIBLE);
             }
-            userAdapter = new UserListAdapter(getApplicationContext(), R.layout.layout_user, userList);
+            userAdapter = new UserListAdapter(getApplicationContext(), R.layout.layout_user, filteredUsers);
             list.setAdapter(userAdapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(MarketActivity.this, OtherProfileActivity.class);
-                    intent.putExtra("User", userList.get(i));
+                    intent.putExtra("User", filteredUsers.get(i));
                     startActivity(intent);
                 }
             });
@@ -377,7 +412,7 @@ public class MarketActivity extends AppCompatActivity {
             Log.d(TAG, "categoryIndex = " + categoryIndex + " sortIndex = " + sortIndex + " groupIndex = " + groupIndex);
 
             // update search results to display the filtered items
-            displayFilteredResults(itemsList, userList);
+            displayFilteredResults(itemsList, userList, "");
 
         }
 
