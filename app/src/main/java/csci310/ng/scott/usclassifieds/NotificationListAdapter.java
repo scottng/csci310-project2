@@ -31,13 +31,14 @@ public class NotificationListAdapter extends ArrayAdapter<Notification> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         String message = getItem(position).getMessage();
+        String img = getItem(position).getSenderImgURL();
         LayoutInflater inflater = LayoutInflater.from(mcontext);
         convertView = inflater.inflate(mresource, parent, false);
-        TextView nameView = (TextView) convertView.findViewById(R.id.user_full_name);
+        TextView messageD = (TextView) convertView.findViewById(R.id.list_notification_message);
         if(!TextUtils.isEmpty(img)) {
-            Glide.with(mcontext).load(img).into((ImageView) convertView.findViewById(R.id.user_img));
+            Glide.with(mcontext).load(img).into((ImageView) convertView.findViewById(R.id.list_notification_image));
         }
-        nameView.setText(fullName);
+        messageD.setText(message);
         return convertView;
     }
 }
