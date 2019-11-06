@@ -53,9 +53,11 @@ public class NotificationsActivity extends AppCompatActivity {
         // Link UI
         mylist = (ListView) findViewById(R.id.list_notifications);
         results = findViewById(R.id.results_not);
+
         // Get Firebase refs
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+
         navigation = findViewById(R.id.navigationNote);
         mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -79,9 +81,6 @@ public class NotificationsActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //set selected item depending on Activity
         navigation.setSelectedItemId(R.id.navigation_notifications);
-
-
-
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

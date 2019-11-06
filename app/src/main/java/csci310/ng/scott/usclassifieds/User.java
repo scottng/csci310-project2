@@ -11,7 +11,7 @@ public class User implements Serializable {
     private String phone;
     private String userID;
     private String textBio;
-    private List<String> friendList;
+    private String friendList;
     private int sold;
 
     public User() {}
@@ -23,7 +23,7 @@ public class User implements Serializable {
         this.phone = "";
         this.userID = "";
         this.textBio = textBio;
-        friendList = new ArrayList<>();
+        friendList = "";
         sold = 0;
     }
 
@@ -51,7 +51,7 @@ public class User implements Serializable {
         return textBio;
     }
 
-    public List<String> getFriendList() {
+    public String getFriendList() {
         return friendList;
     }
 
@@ -83,7 +83,7 @@ public class User implements Serializable {
         this.textBio = textBio;
     }
 
-    public void setFriendList(List<String> friendList) {
+    public void setFriendList(String friendList) {
         this.friendList = friendList;
     }
 
@@ -92,15 +92,16 @@ public class User implements Serializable {
     }
 
     public void addFriend(String uid) {
-        this.friendList.add(uid);
+//        this.friendList.add(uid);
+        friendList += "," + uid;
     }
 
-    public void removeFriend(String uid) {
-        this.friendList.remove(uid);
-    }
+//    public void removeFriend(String uid) {
+//        this.friendList.remove(uid);
+//    }
 
     public boolean isFriendsWith(String uid) {
-        return this.friendList.contains(uid);
+        return friendList.contains(uid);
     }
 
     public void incrementSold() {
