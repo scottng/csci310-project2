@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-         
+
 
             <TextView
                 android:id="@+id/list_item_name"
