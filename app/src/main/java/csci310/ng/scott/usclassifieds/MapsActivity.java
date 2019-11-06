@@ -156,7 +156,7 @@ public class MapsActivity extends FragmentActivity
             LatLng loc = new LatLng(hold.getLat(), hold.getLng());
 
            Marker itemMarker =  mMap.addMarker(new MarkerOptions().position(loc).title(hold.getTitle())
-                   .snippet('$' + Double.toString(hold.getPrice())));
+                   .snippet(String.format("$%.2f",hold.getPrice())));
            itemMarker.showInfoWindow();
            itemMarker.setTag(hold);
            Log.d(TAG, hold.getTitle());
