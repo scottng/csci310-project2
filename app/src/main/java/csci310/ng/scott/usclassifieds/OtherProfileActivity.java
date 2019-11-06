@@ -12,19 +12,30 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OtherProfileActivity extends Activity {
+
+    // Firebase stuff
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
+
     private Button searchUser;
     CircleImageView imageProfilePicture;
     TextView textProfileName;
@@ -37,6 +48,10 @@ public class OtherProfileActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_profile);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
         Intent i = getIntent();
         final User user = (User) i.getSerializableExtra("User");
 
@@ -84,6 +99,25 @@ public class OtherProfileActivity extends Activity {
                 Intent intent = new Intent(OtherProfileActivity.this, MarketActivity.class);
                 intent.putExtra("User", user);
                 startActivity(intent);
+            }
+        });
+        followUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser currUser = firebaseAuth.getCurrentUser();
+                Notification notification = new Notification(currUser.getUid(), user.getUserID(), currUser.getDisplayName() + " requested to follow you.");
+
+                firebaseDatabase.getReference("Notification").child(currUser.getUid() + user.getUserID()).setValue(notification)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(OtherProfileActivity.this, "Your request has been sent.", Toast.LENGTH_SHORT).show();
+                                    followUser.setClickable(false);
+                                    followUser.setText("Requested");
+                                }
+                            }
+                        });
             }
         });
     }
