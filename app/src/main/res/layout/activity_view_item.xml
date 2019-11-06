@@ -7,15 +7,30 @@
     tools:context=".ViewItemActivity"
     style="@style/AppTheme"
     android:background="@color/colorPrimaryDark">
+    <TextView
+        android:id="@+id/view_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Miscellaneous"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Heading1"
+        android:background="@drawable/filter_tag"
+        android:gravity="center"
+        />
 
     <ImageView
         android:id="@+id/view_item_img"
         android:layout_width="401dp"
         android:layout_height="300dp"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/bike"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_filter"
+        android:scaleType="fitCenter"
         />
 
     <TextView
@@ -26,7 +41,7 @@
         android:text="Fixie Bike"
         android:layout_marginStart="16dp"
         android:textAppearance="?android:attr/textAppearance"
-        android:textSize="32sp"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/view_item_price"
         app:layout_constraintTop_toBottomOf="@id/view_item_img" />
@@ -39,7 +54,7 @@
         android:text="$20.34"
         android:textAppearance="?android:attr/textAppearance"
         android:textColor="@color/colorAction"
-        android:textSize="30sp"
+        android:textSize="26sp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/view_item_name"
         app:layout_constraintStart_toEndOf="@+id/view_item_name"
@@ -61,11 +76,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_item_price" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sellerConstraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_item_description">
@@ -107,7 +123,7 @@
             style="@style/LongButton"
             android:layout_width="132dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="32dp"
             android:backgroundTint="@color/colorAccent"
             android:text="Mark as sold"
             app:layout_constraintEnd_toEndOf="parent"

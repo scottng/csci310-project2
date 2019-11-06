@@ -42,7 +42,7 @@ class ItemListAdapter extends ArrayAdapter<Item> {
         TextView priceView = (TextView) convertView.findViewById(R.id.list_item_price);
         Glide.with(mcontext).load(img).into((ImageView) convertView.findViewById(R.id.image_item));
         titleView.setText(title);
-        priceView.setText("$" + Double.toString(price));
+        priceView.setText("$" + String.format("%.2f", price));
         return convertView;
     }
 }

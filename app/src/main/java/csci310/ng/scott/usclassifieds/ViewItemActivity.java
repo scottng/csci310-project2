@@ -36,6 +36,7 @@ public class ViewItemActivity extends AppCompatActivity {
     private ImageView imageViewItemPic;
     private TextView textViewUserName;
     private TextView textViewEmail;
+    private TextView textViewFilter;
     private Button markSoldButton;
     private ImageButton upButton;
     private CircleImageView circleImageViewUserPic;
@@ -58,6 +59,7 @@ public class ViewItemActivity extends AppCompatActivity {
         circleImageViewUserPic = findViewById(R.id.view_profile_picture);
         markSoldButton = findViewById(R.id.button_mark_sold);
         upButton = findViewById(R.id.button_up);
+        textViewFilter = findViewById(R.id.view_filter);
 
         //Get source intent
         Intent i = getIntent();
@@ -69,6 +71,8 @@ public class ViewItemActivity extends AppCompatActivity {
         textViewPrice.setText(String.format("$%.2f", item.getPrice()));
         Glide.with(getApplicationContext()).load(item.getPhotoURL())
                 .into(imageViewItemPic);
+        //Get resource from arrays and get category element
+        textViewFilter.setText(getResources().getStringArray(R.array.filterName)[item.getCategory()]);
 
         Log.d(TAG, "Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
 

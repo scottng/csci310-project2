@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="filterName">
+        <item>Electronics</item>
+        <item>Textbooks</item>
+        <item>Clothes</item>
+        <item>Transportation</item>
+        <item>Miscellaneous</item>
+    </string-array>
+</resources>
