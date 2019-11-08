@@ -151,12 +151,12 @@ public class OtherProfileActivity extends Activity {
                     dbref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            User currUserInfo = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
-//                            currUserInfo.removeFriend(user.getUserID());
-//                            user.removeFriend(currUserInfo.getUserID());
-//
-//                            dbref.child("User").child(currUserInfo.getUserID()).setValue(currUserInfo);
-//                            dbref.child("User").child(user.getUserID()).setValue(user);
+                            User currUserInfo = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
+                            currUserInfo.removeFriend(user.getUserID());
+                            user.removeFriend(currUserInfo.getUserID());
+
+                            dbref.child("User").child(currUserInfo.getUserID()).setValue(currUserInfo);
+                            dbref.child("User").child(user.getUserID()).setValue(user);
                         }
 
                         @Override

@@ -92,13 +92,12 @@ public class User implements Serializable {
     }
 
     public void addFriend(String uid) {
-//        this.friendList.add(uid);
         friendList += "," + uid;
     }
 
-//    public void removeFriend(String uid) {
-//        this.friendList.remove(uid);
-//    }
+    public void removeFriend(String uid) {
+        friendList.replace("," + uid, "");
+    }
 
     public boolean isFriendsWith(String uid) {
         return friendList.contains(uid);
