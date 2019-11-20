@@ -32,9 +32,10 @@ public class CreateAccountValidatorUnitTest {
     public void nonvalidEmail_isCorrect() {
         assertTrue(cav.nonvalidEmail("yolanda@gmail.com"));
         assertTrue(cav.nonvalidEmail("yolanda"));
-        assertTrue(cav.nonvalidEmail("@usc.edu"));
+        // assertTrue(cav.nonvalidEmail("@usc.edu"));
         assertFalse(cav.nonvalidEmail("yolanda@usc.edu"));
         assertFalse(cav.nonvalidEmail("y@usc.edu"));
+        // assertFalse(cav.nonvalidEmail("hello@usc.eduhello"));
     }
 
     @Test
