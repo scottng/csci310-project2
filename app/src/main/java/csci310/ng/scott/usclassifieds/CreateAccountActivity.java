@@ -94,44 +94,15 @@ public class CreateAccountActivity extends AppCompatActivity {
                 final String password = editTextPassword.getText().toString();
                 final String confirmPassword = editTextConfirmPassword.getText().toString();
                 final String textBio = editTextBio.getText().toString();
+                
+                CreateAccountValidator cav = new CreateAccountValidator();
 
-                // check field is not empty
-                if (TextUtils.isEmpty(fullName)) {
-                    Toast.makeText(CreateAccountActivity.this, "Please Enter Full Name", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                if(cav.emptyName(fullName) || cav.emptyEmail(email) || cav.nonvalidEmail(email) ||
+                        cav.emptyPassword(password) || cav.nonvalidPassword(password) ||
+                        cav.emptyConfirmPassword(password) ||
+                        cav.nonmatchingPasswords(password, confirmPassword)) {
 
-                // check field is not empty
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(CreateAccountActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!email.matches(".*@usc\\.edu")) {
-                    Toast.makeText(CreateAccountActivity.this, "Please Enter a USC Email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // check field is not empty
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(CreateAccountActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // check field is not empty
-                if (password.length() < 6) {
-                    Toast.makeText(CreateAccountActivity.this, "Password must be longer than 6 characters", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // check field is not empty
-                if (TextUtils.isEmpty(fullName)) {
-                    Toast.makeText(CreateAccountActivity.this, "Please Re-Enter Password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!password.equals(confirmPassword)) {
-                    Toast.makeText(CreateAccountActivity.this, "Passwords Don't Match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateAccountActivity.this, cav.getErrorMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
