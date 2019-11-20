@@ -66,4 +66,16 @@ public class CreateAccountValidatorUnitTest {
         assertFalse(cav.nonmatchingPasswords("abcdef", "abcdef"));
         assertFalse(cav.nonmatchingPasswords("Jjrb25sz", "Jjrb25sz"));
     }
+
+    @Test
+    public void invalidInput_isCorrect() {
+        assertFalse(cav.invalidInput("Yolanda", "123456", "yolanda@usc.edu", "123456"));
+        assertTrue(cav.invalidInput("", "123456", "yolanda@usc.edu", "123456"));
+        assertTrue(cav.invalidInput("Yolanda", "123456", "", ""));
+        assertTrue(cav.invalidInput("Yolanda", "123456", "yolanda@gmail.com", "123456"));
+        assertTrue(cav.invalidInput("Yolanda", "", "yolanda@usc.edu", "654321"));
+        assertTrue(cav.invalidInput("Yolanda", "123", "yolanda@usc.edu", "123"));
+        assertTrue(cav.invalidInput("Yolanda", "123456", "yolanda@usc.edu", ""));
+        assertTrue(cav.invalidInput("Yolanda", "123456", "yolanda@usc.edu", "654321"));
+    }
 }

@@ -67,4 +67,15 @@ public class CreateAccountValidator {
         else return false;
     }
 
+    public boolean invalidInput(String fullName, String password, String email, String confirmPassword) {
+        if (emptyName(fullName)) return true;
+        if (emptyEmail(email)) return true;
+        if (nonvalidEmail(email)) return true;
+        if (emptyPassword(password)) return true;
+        if (nonvalidPassword(password)) return true;
+        if (emptyConfirmPassword(password)) return true;
+        if (nonmatchingPasswords(password, confirmPassword)) return true;
+        return false;
+    }
+
 }

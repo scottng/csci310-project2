@@ -1,22 +1,8 @@
 package csci310.ng.scott.usclassifieds;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +20,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -83,7 +72,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
         //set up register button listener
-
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -94,20 +82,19 @@ public class CreateAccountActivity extends AppCompatActivity {
                 final String password = editTextPassword.getText().toString();
                 final String confirmPassword = editTextConfirmPassword.getText().toString();
                 final String textBio = editTextBio.getText().toString();
-                
+
+                // Check if input is valid
                 CreateAccountValidator cav = new CreateAccountValidator();
 
-                if(cav.emptyName(fullName) || cav.emptyEmail(email) || cav.nonvalidEmail(email) ||
-                        cav.emptyPassword(password) || cav.nonvalidPassword(password) ||
-                        cav.emptyConfirmPassword(password) ||
-                        cav.nonmatchingPasswords(password, confirmPassword)) {
-
+                if(cav.invalidInput(fullName, password, email, confirmPassword)) {
                     Toast.makeText(CreateAccountActivity.this, cav.getErrorMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // Let user know they're registering
                 Toast.makeText(CreateAccountActivity.this, "Registering...", Toast.LENGTH_SHORT).show();
 
+                // create user
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -140,32 +127,22 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                                                         userInfo.setProfilePic(uri.toString());
 
-                                                        userInfo.setUserID(mAuth.getCurrentUser().getUid());
-
-                                                        databaseReference.child(mAuth.getCurrentUser().getUid())
-                                                                .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
-                                                                startActivity(new Intent(getApplicationContext(), MarketActivity.class));
-                                                            }
-                                                        });
                                                     }
                                                 });
                                             }
                                         });
-                                    } else {
-                                        userInfo.setUserID(mAuth.getCurrentUser().getUid());
-
-                                        databaseReference.child(mAuth.getCurrentUser().getUid())
-                                                .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(getApplicationContext(), MarketActivity.class));
-                                            }
-                                        });
                                     }
+
+                                    userInfo.setUserID(mAuth.getCurrentUser().getUid());
+
+                                    databaseReference.child(mAuth.getCurrentUser().getUid())
+                                            .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), MarketActivity.class));
+                                        }
+                                    });
 
                                 } else {
                                     Toast.makeText(CreateAccountActivity.this, "Failed to Register", Toast.LENGTH_SHORT).show();
