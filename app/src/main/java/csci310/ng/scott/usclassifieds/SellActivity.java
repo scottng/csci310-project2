@@ -121,7 +121,7 @@ public class SellActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // check length
                 if(editTextTitle.getText().toString().trim().length() > 18) {
-                    Toast.makeText(getApplicationContext(), "Title must be under 32 characters", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Title must be under 19 characters", Toast.LENGTH_LONG).show();
                 } else if (editTextDescription.getText().toString().trim().length() > 100) {
                     Toast.makeText(getApplicationContext(), "Description must be under 100 characters", Toast.LENGTH_LONG).show();
                 } else if (editTextPrice.getText().toString().trim().length() > 9) {
