@@ -100,6 +100,8 @@ public class Item implements Serializable {
 
     public String getAddress(){return address;}
 
+    public void setAddress(String address){this.address = address;};
+
     public void setLat(double lat) {this.lat = lat;}
 
     public double getLat() {return lat;}
