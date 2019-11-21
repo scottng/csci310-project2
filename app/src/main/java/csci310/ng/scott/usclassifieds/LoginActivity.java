@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(LoginActivity.this, "Logging In...", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(LoginActivity.this, "Logging In...", Toast.LENGTH_SHORT).show();
 
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
