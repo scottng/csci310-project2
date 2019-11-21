@@ -121,19 +121,19 @@ public class SellActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // check length
                 if(editTextTitle.getText().toString().trim().length() > 18) {
-                    Toast.makeText(getApplicationContext(), "Title must be under 19 characters", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.title_length_toast), Toast.LENGTH_LONG).show();
                 } else if (editTextDescription.getText().toString().trim().length() > 100) {
-                    Toast.makeText(getApplicationContext(), "Description must be under 100 characters", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.description_length_toast), Toast.LENGTH_LONG).show();
                 } else if (editTextPrice.getText().toString().trim().length() > 9) {
-                    Toast.makeText(getApplicationContext(), "Your item is too expensive!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.item_too_expensive_toast), Toast.LENGTH_LONG).show();
                 } else if(editTextTitle.getText().toString().trim().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Title cannot be blank", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.title_blank_toast), Toast.LENGTH_LONG).show();
                 } else if (editTextPrice.getText().toString().trim().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Price cannot be blank", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.price_blank_toast), Toast.LENGTH_LONG).show();
                 } else if (editTextDescription.getText().toString().trim().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Description cannot be empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.description_empty_toast), Toast.LENGTH_LONG).show();
                 } else if (itemPicUri == null) {
-                    Toast.makeText(getApplicationContext(), "Picture cannot be empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.picture_empty_toast), Toast.LENGTH_LONG).show();
                 } else {
 
                     final Item mItem = new Item();

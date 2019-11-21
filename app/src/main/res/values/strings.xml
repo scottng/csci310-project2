@@ -46,5 +46,12 @@
     <string name="sign_out">Sign Out</string>
 
     <string name="google_maps_key">AIzaSyALN9R_SktUCv2fHqF3IYruxbvECd1JZz4</string>
+    <string name="title_length_toast">Title must be under 19 characters</string>
+    <string name="description_length_toast">Description must be under 100 characters</string>
+    <string name="item_too_expensive_toast">Your item is too expensive!</string>
+    <string name="title_blank_toast">Title cannot be blank</string>
+    <string name="price_blank_toast">Price cannot be blank</string>
+    <string name="description_empty_toast">Description cannot be empty</string>
+    <string name="picture_empty_toast">Picture cannot be empty</string>
 
 </resources>
