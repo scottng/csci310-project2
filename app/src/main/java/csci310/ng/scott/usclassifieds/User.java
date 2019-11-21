@@ -1,18 +1,16 @@
 package csci310.ng.scott.usclassifieds;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class User implements Serializable {
-    private String profilePic;
-    private String fullName;
-    private String email;
-    private String phone;
-    private String userID;
-    private String textBio;
-    private String friendList;
-    private int sold;
+    private String profilePic = null;
+    private String fullName = null;
+    private String email = null;
+    private String phone = null;
+    private String userID = null;
+    private String textBio = null;
+    private String friendList = null;
+    private int sold = 0;
 
     public User() {}
 
@@ -96,7 +94,7 @@ public class User implements Serializable {
     }
 
     public void removeFriend(String uid) {
-        friendList.replace("," + uid, "");
+        friendList = friendList.replace("," + uid, "");
     }
 
     public boolean isFriendsWith(String uid) {
