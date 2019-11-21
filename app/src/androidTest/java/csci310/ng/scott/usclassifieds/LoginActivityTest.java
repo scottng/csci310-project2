@@ -1,123 +1,107 @@
 package csci310.ng.scott.usclassifieds;
 
+import android.app.Activity;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsNot;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.espresso.ViewInteraction;
+import java.util.Collection;
+import java.util.Iterator;
+
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import androidx.test.runner.lifecycle.Stage;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
-@LargeTest
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
 @RunWith(AndroidJUnit4.class)
 public class LoginActivityTest {
 
+    private Activity getActivityInstance(){
+        final Activity[] currentActivity = {null};
+
+        getInstrumentation().runOnMainSync(new Runnable(){
+            public void run(){
+                Collection<Activity> resumedActivity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+                Iterator<Activity> it = resumedActivity.iterator();
+                currentActivity[0] = it.next();
+            }
+        });
+
+        return currentActivity[0];
+    }
+
     @Rule
-    public ActivityTestRule<LandingActivity> mActivityTestRule = new ActivityTestRule<>(LandingActivity.class);
+    public final ActivityTestRule<LoginActivity> activityRule =
+            new ActivityTestRule<>(LoginActivity.class);
+
 
     @Test
-    public void loginActivityTest() {
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+    public void userCanEnterEmail() {
+        onView(withId(R.id.edit_text_email)).perform(typeText("myemail@usc.edu"), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_email)).check(matches(withText("myemail@usc.edu")));
+    }
+
+    @Test
+    public void userCanEnterPassword() {
+        onView(withId(R.id.edit_text_password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_password)).check(matches(withText("password")));
+    }
+
+
+    @Test
+    public void userCanLogin() {
+        LoginActivity activity = activityRule.getActivity();
+        onView(withId(R.id.edit_text_email)).perform(typeText("ta@usc.edu"), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_password)).perform(typeText("password"), closeSoftKeyboard());
+
+        onView(withId(R.id.button_login)).perform(click());
+
+        Activity activity1 = getActivityInstance();
+
         try {
-            Thread.sleep(7000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.button_directto_login), withText("Log In"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        appCompatButton.perform(click());
+        onView(withText("Login Successful")).
+                inRoot(withDecorView(IsNot.not(is(activity1.getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+    }
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+    @Test
+    public void userCannotLoginAfterInvalidInfo() {
+        LoginActivity activity = activityRule.getActivity();
+        onView(withId(R.id.edit_text_email)).perform(typeText("asdf@usc.edu"), closeSoftKeyboard());
+        onView(withId(R.id.edit_text_password)).perform(typeText("invalidpassword"), closeSoftKeyboard());
+        onView(withId(R.id.button_login)).perform(click());
+
         try {
-            Thread.sleep(7000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.edit_text_email),
-                        childAtPosition(
-                                allOf(withId(R.id.layout_login),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatEditText.perform(replaceText("test@usc.edu"), closeSoftKeyboard());
-
-        pressBack();
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.button_login), withText("Log In"),
-                        childAtPosition(
-                                allOf(withId(R.id.layout_login),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        appCompatButton2.perform(click());
-
-        ViewInteraction viewGroup = onView(
-                allOf(withId(R.id.layout_login),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
+        onView(withText("Login failed.")).
+                inRoot(withDecorView(IsNot.not(is(activity.getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
     }
 
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
-
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
-    }
 }
