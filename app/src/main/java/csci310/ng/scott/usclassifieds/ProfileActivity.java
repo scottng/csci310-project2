@@ -39,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button searchUser;
     CircleImageView imageProfilePicture;
     TextView textProfileName;
+    TextView textBadge;
     TextView textProfileBio;
     TextView textProfileBodyEmail;
     Button signOutButton;
@@ -54,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         // Link UI
+        textBadge = findViewById(R.id.text_profile_badges);
         imageProfilePicture = findViewById(R.id.image_profile_picture);
         textProfileName = findViewById(R.id.text_profile_name);
         textProfileBio = findViewById(R.id.text_profile_bio);
@@ -100,6 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String[] testArray = getResources().getStringArray(R.array.badgeName);
                 currUserInfo[0] = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
 
                 textProfileName.setText(currUserInfo[0].getFullName());
@@ -111,7 +114,24 @@ public class ProfileActivity extends AppCompatActivity {
                     Glide.with(getApplicationContext())
                             .load(currUserInfo[0].getProfilePic()).into(imageProfilePicture);
                 }
+                int sold = currUserInfo[0].getSold();
+                if(sold < 5){
+                    textBadge.setText(testArray[0]);
+                }
+                else if(sold < 10){
+                    textBadge.setText(testArray[1]);
+                }
+                else if(sold < 35){
+                    textBadge.setText(testArray[2]);
+                }
+                else if(sold < 50){
+                    textBadge.setText(testArray[3]);
+                }
+                else{
+                    textBadge.setText(testArray[4]);
+                }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

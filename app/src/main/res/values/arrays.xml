@@ -8,4 +8,11 @@
         <item>Transportation</item>
         <item>Miscellaneous</item>
     </string-array>
+    <string-array name="badgeName">
+        <item>Spectacular New Seller to USClassified</item>
+        <item>Textbooks</item>
+        <item>Clothes</item>
+        <item>Transportation</item>
+        <item>Miscellaneous</item>
+    </string-array>
 </resources>

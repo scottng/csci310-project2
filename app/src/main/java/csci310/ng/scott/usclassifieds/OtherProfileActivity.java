@@ -47,6 +47,7 @@ public class OtherProfileActivity extends Activity {
     private Button searchUser;
     CircleImageView imageProfilePicture;
     TextView textProfileName;
+    TextView textBadge;
     TextView textProfileBio;
     TextView textProfileBodyEmail;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
@@ -64,7 +65,7 @@ public class OtherProfileActivity extends Activity {
 
         Intent i = getIntent();
         final User user = (User) i.getSerializableExtra("User");
-
+        textBadge = findViewById(R.id.text_other_profile_badges);
         imageProfilePicture = findViewById(R.id.image_other_profile_picture);
         textProfileName = findViewById(R.id.text_other_profile_name);
         textProfileBio = findViewById(R.id.text_other_profile_bio);
@@ -102,6 +103,23 @@ public class OtherProfileActivity extends Activity {
         if (!user.getProfilePic().equals("")) {
             Glide.with(getApplicationContext())
                     .load(user.getProfilePic()).into(imageProfilePicture);
+        }
+        int sold = user.getSold();
+        String[] testArray = getResources().getStringArray(R.array.badgeName);
+        if(sold < 5){
+            textBadge.setText(testArray[0]);
+        }
+        else if(sold < 10){
+            textBadge.setText(testArray[1]);
+        }
+        else if(sold < 35){
+            textBadge.setText(testArray[2]);
+        }
+        else if(sold < 50){
+            textBadge.setText(testArray[3]);
+        }
+        else{
+            textBadge.setText(testArray[4]);
         }
         searchUser.setOnClickListener(new View.OnClickListener() {
             @Override
