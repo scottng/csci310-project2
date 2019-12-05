@@ -1,146 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OtherProfileActivity"
-    android:background="@color/colorPrimaryDark">
+    android:fillViewport="true"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_header"
-        android:text="@string/other_profile_text_header"
-        style="@style/Heading1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="24dp"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".OtherProfileActivity"
+        android:background="@color/colorPrimaryDark">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image_other_profile_picture"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_margin="24dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/bike"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_other_profile_header" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_other_profile_header"
+            android:text="@string/other_profile_text_header"
+            style="@style/Heading1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="24dp"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_name"
-        android:text="Diane Nguyen"
-        style="@style/Heading1"
-        android:layout_margin="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_other_profile_picture"
-        />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_other_profile_picture"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_margin="24dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/bike"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_other_profile_header" />
 
-    <Button
-        android:id="@+id/button_follow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Follow"
-        android:layout_marginTop="24dp"
-        android:textAllCaps="false"
-        style="@style/LongButton"
-        android:background="@drawable/button_general_selector"
-        app:layout_constraintTop_toBottomOf="@id/text_other_profile_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-         />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_other_profile_name"
+            android:text="Diane Nguyen"
+            style="@style/Heading1"
+            android:layout_margin="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_other_profile_picture"
+            />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_bio"
-        app:layout_constraintTop_toBottomOf="@id/button_follow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/other_profile_text_bio_sample"
-        android:layout_margin="24dp"
-        android:textColor="@color/colorWhite"
-        />
+        <Button
+            android:id="@+id/button_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Follow"
+            android:layout_marginTop="24dp"
+            android:textAllCaps="false"
+            style="@style/LongButton"
+            android:background="@drawable/button_general_selector"
+            app:layout_constraintTop_toBottomOf="@id/text_other_profile_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_label_email"
-        android:text="@string/other_profile_text_label_email"
-        app:layout_constraintTop_toBottomOf="@id/text_other_profile_bio"
-        android:layout_margin="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_other_profile_bio"
+            app:layout_constraintTop_toBottomOf="@id/button_follow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/other_profile_text_bio_sample"
+            android:layout_margin="24dp"
+            android:textColor="@color/colorWhite"
+            />
 
-
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_other_profile_body_email"
-        android:text="Placeholder text"
-        android:layout_margin="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@id/text_other_profile_label_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/text_other_profile_label_email"
-        android:textColor="@color/colorWhite"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
-
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/other_search_user"
-        android:text="Search Items Sold By User"
-        style="@style/LongButton"
-        android:background="@drawable/button_general_selector"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_other_profile_body_email"
-        android:layout_margin="24dp"/>
-    <TextView
-        android:id="@+id/badgesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Heading1"
-        android:layout_marginTop="24dp"
-        android:text="Badges:"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/other_search_user"
-        />
-
-
-    <TextView
-        android:id="@+id/text_other_profile_badges"
-        style="@style/Heading2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/colorAction"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/badgesTitle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_other_profile_label_email"
+            android:text="@string/other_profile_text_label_email"
+            app:layout_constraintTop_toBottomOf="@id/text_other_profile_bio"
+            android:layout_margin="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            />
 
 
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_other_profile_body_email"
+            android:text="Placeholder text"
+            android:layout_margin="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_other_profile_label_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_other_profile_label_email"
+            android:textColor="@color/colorWhite"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="?android:attr/windowBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/navigation" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/other_search_user"
+            android:text="Search Items Sold By User"
+            style="@style/LongButton"
+            android:background="@drawable/button_general_selector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_other_profile_body_email"
+            android:layout_margin="24dp"/>
+        <TextView
+            android:id="@+id/badgesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Heading1"
+            android:layout_marginTop="24dp"
+            android:text="Badges:"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/other_search_user"
+            />
+
+
+        <TextView
+            android:id="@+id/text_other_profile_badges"
+            style="@style/Heading2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/colorAction"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/badgesTitle" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+
+
+</ScrollView>
