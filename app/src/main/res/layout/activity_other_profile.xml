@@ -132,7 +132,7 @@
         style="@style/Heading2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/newUserBadge"
+        android:text=""
         android:textColor="@color/colorAction"
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
