@@ -29,6 +29,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateAccountActivity";
     public static final int REQUEST_CODE = 2;
+    public static final int REQUEST_CODE_FROM_MARKET = 0;
     public static final int PICK_IMAGE=3;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -140,7 +141,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Toast.makeText(CreateAccountActivity.this, "Registration Complete", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), MarketActivity.class));
+                                            startActivityForResult(new Intent(getApplicationContext(), MarketActivity.class), REQUEST_CODE_FROM_MARKET);
                                         }
                                     });
 
@@ -161,6 +162,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (requestCode== PICK_IMAGE  && resultCode == RESULT_OK && data!=null) {
             profilePictureUri = data.getData();
             imageButtonProfilePicture.setImageURI(profilePictureUri);
+        }
+        if(requestCode== REQUEST_CODE_FROM_MARKET){
+            setResult(LandingActivity.RESULT_EXIT);
+            finish();
         }
     }
 

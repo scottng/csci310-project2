@@ -1,6 +1,7 @@
 package csci310.ng.scott.usclassifieds;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -22,6 +23,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE_FROM_MARKET = 0;
+    public static final int EXIT_RESULT = -1;
+
 
     private FirebaseAuth mAuth;
 
@@ -75,18 +79,21 @@ public class LoginActivity extends AppCompatActivity {
 //                                    FirebaseUser user = mAuth.getCurrentUser();
 //                                    updateUI(user);
                                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), MarketActivity.class));
+                                    startActivityForResult(new Intent(getApplicationContext(), MarketActivity.class), REQUEST_CODE_FROM_MARKET);
                                 } else
                                     Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-//                Intent i = new Intent(getApplicationContext(), MarketActivity.class);
-//                startActivityForResult(i, MarketActivity.REQUEST_CODE);
             }
         });
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE_FROM_MARKET){
+            setResult(LandingActivity.RESULT_EXIT);
+            finish();
+        }
+    }
 }

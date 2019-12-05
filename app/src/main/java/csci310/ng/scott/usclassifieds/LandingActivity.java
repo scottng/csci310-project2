@@ -1,5 +1,6 @@
 package csci310.ng.scott.usclassifieds;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -12,6 +13,7 @@ import android.widget.Button;
 public class LandingActivity extends AppCompatActivity {
 
     private static final String TAG = "LandingActivity";
+    public static final int RESULT_EXIT = -1;
 
     // UI Elements
     private Button buttonCreateAccount;
@@ -22,6 +24,7 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         setContentView(R.layout.activity_landing);
+
 
         // Link UI
         buttonCreateAccount = findViewById(R.id.button_create_account);
@@ -47,4 +50,11 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_EXIT){
+            finish();
+        }
+    }
 }
