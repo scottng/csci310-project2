@@ -5,5 +5,6 @@
     <color name="colorAccent">#e30425</color>
     <color name="colorWhite">#efefef</color>
     <color name="colorAction">#ff554f</color>
+    <color name="colorPressedAction">#802A28</color>
 
 </resources>

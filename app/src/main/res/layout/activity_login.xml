@@ -49,6 +49,7 @@
             android:id="@+id/button_login"
             style="@style/LongButton"
             android:text="Log In"
+            android:background="@drawable/button_general_selector"
             app:layout_constraintTop_toBottomOf="@id/edit_text_password"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

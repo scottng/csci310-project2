@@ -19,17 +19,18 @@
         style="@style/Heading1"
         android:background="@drawable/filter_tag"
         android:gravity="center"
+        android:textAlignment="center"
         />
 
     <ImageView
         android:id="@+id/button_up"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/up_button_view_item"
         app:layout_constraintBottom_toBottomOf="@+id/view_filter"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view_filter"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="28dp"
         android:src="@drawable/ic_up"/>
 
     <ImageView

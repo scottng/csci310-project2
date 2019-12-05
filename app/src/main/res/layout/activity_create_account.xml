@@ -112,6 +112,7 @@
         android:id="@+id/button_register"
         android:text="@string/create_account_button_register"
         style="@style/LongButton"
+        android:background="@drawable/button_general_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_create_account_form"
