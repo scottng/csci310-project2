@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Follow"
+        android:layout_marginTop="24dp"
         android:textAllCaps="false"
         style="@style/LongButton"
         app:layout_constraintTop_toBottomOf="@id/text_other_profile_name"
@@ -62,7 +63,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/other_profile_text_bio_sample"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         android:textColor="@color/colorWhite"
         />
 
@@ -72,7 +73,7 @@
         android:id="@+id/text_other_profile_label_email"
         android:text="@string/other_profile_text_label_email"
         app:layout_constraintTop_toBottomOf="@id/text_other_profile_bio"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -118,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Heading1"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Badges:"
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +128,7 @@
 
 
     <TextView
+        android:id="@+id/text_other_profile_badges"
         style="@style/Heading2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
