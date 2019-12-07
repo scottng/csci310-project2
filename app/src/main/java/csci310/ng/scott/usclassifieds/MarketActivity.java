@@ -226,69 +226,93 @@ public class MarketActivity extends AppCompatActivity {
 
     }
 
-    private void displayFilteredResults(final List<Item> itemsList, final List<User> userList, String query) {
+    private void displayFilteredResults(final List<Item> itemsList, final List<User> userList, final String query) {
 
         // for items
         if (groupIndex == 0) {
-            final List<Item> filteredList = new ArrayList<>();
-            for (Item item : itemsList) {
-                if (query.equals("")) {
-                    if(searchUser != null) {
-                        if(item.getSellerID().equals(searchUser.getUserID())) {
-                            filteredList.add(item);
-                        }
-                    } else {
-                        if (categoryIndex == 5) {
-                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
-                            filteredList.add(item);
-                        } else if (item.getCategory() == categoryIndex) {
-                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
-                            filteredList.add(item);
-                        }
-                    }
-                } else if (item.getTitle().toLowerCase().contains(query.toLowerCase())
-                        || item.getDescription().toLowerCase().contains(query.toLowerCase())) {
-                    if(searchUser != null) {
-                        if(item.getSellerID().equals(searchUser.getUserID())) {
-                            filteredList.add(item);
-                        }
-                    } else {
-                        if (categoryIndex == 5) {
-                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
-                            filteredList.add(item);
-                        } else if (item.getCategory() == categoryIndex) {
-                            Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
-                            filteredList.add(item);
-                        }
-                    }
-                }
-            }
-
-            if (sortIndex == 1) {
-                Collections.sort(filteredList, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item i1, Item i2) {
-                        return new Double(i1.getPrice()).compareTo(new Double(i2.getPrice()));
-                    }
-                });
-            }
-
-            if(filteredList.size() == 0){
-                results.setVisibility(View.VISIBLE);
-            }
-            else{
-                results.setVisibility(View.INVISIBLE);
-            }
-            itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, filteredList);
-            list.setAdapter(itemAdapter);
-
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            final User[] currUserInfo = new User[1];
+            final FirebaseUser currUser = firebaseAuth.getCurrentUser();
+            DatabaseReference rootRef = firebaseDatabase.getReference();
+            rootRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    currUserInfo[0] = dataSnapshot.child("User").child(currUser.getUid()).getValue(User.class);
 
-                    Intent intent = new Intent(MarketActivity.this, ViewItemActivity.class);
-                    intent.putExtra("Item", filteredList.get(i));
-                    startActivity(intent);
+                    final List<Item> filteredList = new ArrayList<>();
+                    for (Item item : itemsList) {
+                        if (query.equals("")) {
+                            if(searchUser != null) {
+                                if(item.getSellerID().equals(searchUser.getUserID())) {
+                                    filteredList.add(item);
+                                }
+                            } else {
+                                if (categoryIndex == 5) {
+                                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                                    filteredList.add(item);
+                                } else if (categoryIndex == 6) {
+
+
+
+                                    Log.d(TAG,"currUser is : " + currUserInfo[0].getUserID() + " and seller: " + item.getSellerID());
+                                    if(currUserInfo[0].isFriendsWith(item.getSellerID())) {
+                                        Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                                        filteredList.add(item);
+                                    }
+                                } else if (item.getCategory() == categoryIndex) {
+                                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                                    filteredList.add(item);
+                                }
+                            }
+                        } else if (item.getTitle().toLowerCase().contains(query.toLowerCase())
+                                || item.getDescription().toLowerCase().contains(query.toLowerCase())) {
+                            if(searchUser != null) {
+                                if(item.getSellerID().equals(searchUser.getUserID())) {
+                                    filteredList.add(item);
+                                }
+                            } else {
+                                if (categoryIndex == 5) {
+                                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID());
+                                    filteredList.add(item);
+                                } else if (item.getCategory() == categoryIndex) {
+                                    Log.d(TAG, "Filtered Item " + item.getItemID() + " is " + item.getTitle() + " sold by " + item.getSellerID() + " of category " + categoryIndex);
+                                    filteredList.add(item);
+                                }
+                            }
+                        }
+                    }
+
+                    if (sortIndex == 1) {
+                        Collections.sort(filteredList, new Comparator<Item>() {
+                            @Override
+                            public int compare(Item i1, Item i2) {
+                                return new Double(i1.getPrice()).compareTo(new Double(i2.getPrice()));
+                            }
+                        });
+                    }
+
+                    if(filteredList.size() == 0){
+                        results.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        results.setVisibility(View.INVISIBLE);
+                    }
+                    itemAdapter = new ItemListAdapter(getApplicationContext(), R.layout.layout_item, filteredList);
+                    list.setAdapter(itemAdapter);
+
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            Intent intent = new Intent(MarketActivity.this, ViewItemActivity.class);
+                            intent.putExtra("Item", filteredList.get(i));
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
         }
