@@ -51,7 +51,7 @@ import java.util.Vector;
  * An activity that displays a map showing the place at the device's current location.
  */
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+        implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -64,6 +64,7 @@ public class MapsActivity extends FragmentActivity
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
+
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
@@ -167,11 +168,14 @@ public class MapsActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public void onInfoWindowClick(Marker marker) {
         Log.d(TAG, "in the on click for a marker");
         marker.showInfoWindow();
-        return false;
+        Intent intent = new Intent(this, ViewItemActivity.class);
+        intent.putExtra("Item", (Item)marker.getTag());
+        startActivity(intent);
     }
+
 
     /**
      * Gets the current location of the device, and positions the map's camera.
