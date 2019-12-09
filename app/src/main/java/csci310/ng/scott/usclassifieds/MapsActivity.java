@@ -135,19 +135,6 @@ public class MapsActivity extends FragmentActivity
 
         Log.d(TAG, "about to get intent info");
 
-        // get items from Market Activity
-//        Intent intent = getIntent();
-//        int numItems = intent.getIntExtra("numItems", 0);
-//
-//        for (int i=0;i<numItems;i++){
-//            Log.d(TAG, "trying to add markers");
-//            Item hold = (Item)intent.getSerializableExtra("item" + i);
-//            LatLng loc = new LatLng(hold.getLat(), hold.getLng());
-//
-//            mMap.addMarker(new MarkerOptions().position(loc).title(hold.getTitle()).snippet('$' + Double.toString(hold.getPrice())));
-//            Log.d(TAG, hold.getTitle());
-//        }
-
         Intent intent = getIntent();
         int numItems = intent.getIntExtra("numItems", 0);
 
@@ -162,6 +149,7 @@ public class MapsActivity extends FragmentActivity
            itemMarker.setTag(hold);
            Log.d(TAG, hold.getTitle());
         }
+        mMap.setOnInfoWindowClickListener(this);
 
 
 
@@ -171,7 +159,8 @@ public class MapsActivity extends FragmentActivity
     public void onInfoWindowClick(Marker marker) {
         Log.d(TAG, "in the on click for a marker");
         marker.showInfoWindow();
-        Intent intent = new Intent(this, ViewItemActivity.class);
+        // send user to item page
+        Intent intent = new Intent(getApplicationContext(), ViewItemActivity.class);
         intent.putExtra("Item", (Item)marker.getTag());
         startActivity(intent);
     }
