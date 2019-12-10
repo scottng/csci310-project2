@@ -118,7 +118,9 @@ public class MapsActivity extends FragmentActivity
             @Override
               public boolean onMarkerClick(Marker marker) {
                   Log.d(TAG, "in the on click for a marker");
-                  marker.showInfoWindow();
+                  for (int i=0;i<10;i++){
+                      marker.showInfoWindow();
+                  }
                   return false;
               }
         });
@@ -147,7 +149,6 @@ public class MapsActivity extends FragmentActivity
 
            Marker itemMarker =  mMap.addMarker(new MarkerOptions().position(loc).title(hold.getTitle())
                    .snippet(String.format("$%.2f",hold.getPrice())));
-           itemMarker.showInfoWindow();
            itemMarker.setTag(hold);
            Log.d(TAG, hold.getTitle());
         }
@@ -160,7 +161,7 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onInfoWindowClick(Marker marker) {
         Log.d(TAG, "in the on click for info window");
-        marker.showInfoWindow();
+//        marker.showInfoWindow();
         // send user to item page
         Intent intent = new Intent(getApplicationContext(), ViewItemActivity.class);
         intent.putExtra("Item", (Item)marker.getTag());

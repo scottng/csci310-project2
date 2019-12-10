@@ -56,6 +56,8 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         Glide.with(context).load(item.getPhotoURL()).into(img);
 
+        tryAgain(item, img);
+
 
 
         desc.setText(item.getDescription());
@@ -66,4 +68,10 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         return view;
     }
+
+    public void tryAgain(Item item, ImageView img){
+        // trying to use Glide again
+        Glide.with(context).load(item.getPhotoURL()).into(img);
+    }
+
 }
