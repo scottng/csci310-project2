@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import android.os.Handler;
+
 
 /**
  * An activity that displays a map showing the place at the device's current location.
@@ -116,11 +118,19 @@ public class MapsActivity extends FragmentActivity
         mMap = map;
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-              public boolean onMarkerClick(Marker marker) {
+              public boolean onMarkerClick(final Marker marker) {
                   Log.d(TAG, "in the on click for a marker");
                   for (int i=0;i<10;i++){
                       marker.showInfoWindow();
                   }
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        marker.showInfoWindow();
+
+                    }
+                }, 200);
                   return false;
               }
         });
@@ -153,6 +163,7 @@ public class MapsActivity extends FragmentActivity
            Log.d(TAG, hold.getTitle());
         }
         mMap.setOnInfoWindowClickListener(this);
+
 
 
 
