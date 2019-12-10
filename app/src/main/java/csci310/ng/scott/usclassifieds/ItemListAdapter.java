@@ -35,6 +35,7 @@ class ItemListAdapter extends ArrayAdapter<Item> {
         String title = getItem(position).getTitle();
         double price = getItem(position).getPrice();
         String img = getItem(position).getPhotoURL();
+        System.out.println("ll\n\n\n\n\n\n\n\n\n" + img + "\n\n\n\n\n\n\n\n\nll");
 
         LayoutInflater inflater = LayoutInflater.from(mcontext);
         convertView = inflater.inflate(mresource, parent, false);

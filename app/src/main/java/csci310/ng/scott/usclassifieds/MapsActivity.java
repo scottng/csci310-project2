@@ -133,8 +133,10 @@ public class MapsActivity extends FragmentActivity
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-        Log.d(TAG, "about to get intent info");
+        CustomInfoWindow customInfoWindow = new CustomInfoWindow(this);
+        mMap.setInfoWindowAdapter(customInfoWindow);
 
+        Log.d(TAG, "about to get intent info");
         Intent intent = getIntent();
         int numItems = intent.getIntExtra("numItems", 0);
 
@@ -157,7 +159,7 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Log.d(TAG, "in the on click for a marker");
+        Log.d(TAG, "in the on click for info window");
         marker.showInfoWindow();
         // send user to item page
         Intent intent = new Intent(getApplicationContext(), ViewItemActivity.class);
